@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <!--<script src="../js/jquery-1.10.2.js"></script>-->
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+
+    <script type="text/javascript" src="../js/jquery.js"></script>
+
+    <script src="../js/jquery-ui.js"></script>
+
+    <!--从数据库获取数据-->
+    <script src="../js/common.min.js"></script>
+    <!--给UI赋值-->
+    <script src="../js/organization.min.js"></script>
+    <!--省市区-->
+    <script type="text/javascript" src="../js/geo.min.js"></script>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">用户管理</a></li>
+        <li><a href="#">组织管理</a></li>
+    </ul>
+</div>
+
+<div class="rightinfo">
+
+    <div class="tools">
+
+        <ul class="toolbar">
+            <li class="add"><span><img src="../images/t01.min.png"/></span>添加</li>
+            <li class="update"><span><img src="../images/t02.min.png"/></span>修改</li>
+            <li class="del"><span><img src="../images/t03.min.png"/></span>删除</li>
+            <!--<li><span><img src="../images/t04.png"/></span>统计</li>-->
+        </ul>
+
+        <ul class="toolbar1">
+            <li>
+                <select class="searchType righttoolbar" id="searchType">
+                    <option>全部</option>
+                    <option>单位名称</option>
+                    <option>单位地址</option>
+                    <option>单位类型</option>
+                </select>
+                <select class="searchType righttoolbar" id="searchByType" style="display: none">
+                    <option checked = "checked" value="运营商">运营商</option>
+                    <option value="环保局">环保局</option>
+                    <option value="设备商">设备商</option>
+                    <option value="工厂">工厂</option>
+                    <!--<option checked = "checked" value="IT">IT</option>
+                    <option value="互联网">互联网</option>
+                    <option value="环保">环保</option>
+                    <option value="纺织">纺织</option>-->
+                </select>
+
+                <div class="usercity" id="searchByAddress"style="display: none">
+
+                    <!--<div class="province">-->
+                    <select class="searchType righttoolbar" name="province" id="search1">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="city">-->
+                    <select class="searchType righttoolbar"name="city" id="search2">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="district">-->
+                    <select class="searchType righttoolbar"name="town" id="search3">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                </div>
+                <input type="text" class="scinput" id="searchByName"/>
+                <!--<input type="button" class="sure" value="查询"/>-->
+                <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+            </li>
+        </ul>
+
+    </div>
+<!--class="tablelist orgTable"-->
+    <table class="tablelist orgTable sortable" id="orgTable">
+        <thead>
+        <tr>
+            <th class="nosort" style="display: none"></th>
+            <th class="nosort"><input name="checkbox" id="checkAll" type="checkbox"/></th>
+            <th><h3>序号</h3></th>
+            <th><h3>单位名称</h3></th>
+            <th><h3>单位类型</h3></th>
+            <th><h3>单位地址</h3></th>
+            <th><h3>经度</h3></th>
+            <th><h3>纬度</h3></th>
+            <th><h3>单位联系人</h3></th>
+            <th><h3>联系电话</h3></th>
+            <th class="nosort">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="controls">
+        <div id="perpage">
+            <span>每页显示</span>
+            <select onchange="sorter.size(this.value)">
+                <option value="1">1</option>
+                <option value="5">5</option>
+                <option value="10" selected="selected">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>页</span>
+        </div>
+        <div id="navigation">
+            <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+            <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+            <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+            <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+        </div>
+        <div id="text">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+    </div>
+    <script type="text/javascript">
+        var sorter = new TINY.table.sorter("sorter");
+        sorter.head = "head";
+        sorter.asc = "asc";
+        sorter.desc = "desc";
+        sorter.even = "evenrow";
+        sorter.odd = "oddrow";
+        sorter.evensel = "evenselected";
+        sorter.oddsel = "oddselected";
+        sorter.paginate = true;
+        sorter.currentid = "currentpage";
+        sorter.limitid = "pagelimit";
+//        sorter.init("table",1);
+    </script>
+</div>
+<!-- dialog-->
+<div id="add-org" class="dialog" title="添加组织" style="display: none">
+    <p class="validateTips">认真填写下面内容</p>
+
+    <form>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>单位名称<b>*</b></label>
+                    <input type="text" id="unitname" class="dfinput" placeholder="单位名称"
+                          maxlength="64"/>
+                </li>
+                <li>
+                    <label>单位类型<b>*</b></label>
+                    <select id="unittype" class="select select1">
+                        <option checked = "checked" value="operator">运营商</option>
+                        <option value="envProtectAgency">环保局</option>
+                        <option value="deviceProvider">设备商</option>
+                        <option value="factory">工厂</option>
+                        <option value="maintenor">运维</option>
+                    </select>
+                </li>
+                <li>
+                    <label>所在地<b>*</b></label>
+
+                    <div class="usercity">
+
+                        <!--<div class="province">-->
+                        <select class="select select2" name="province" id="s1">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                        <!--<div class="city">-->
+                        <select class="select select2" name="city" id="s2">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                        <!--<div class="district">-->
+                        <select class="select select2" name="town" id="s3">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                    </div>
+
+                </li>
+                <li>
+                    <label>详细地址<b>*</b></label>
+                    <input type="text" id="detailaddress" class="dfinput email" placeholder="详细地址" maxlength="128"/>
+                </li>
+                <li>
+                    <label>经度<b>*</b></label>
+                    <input type="text" id="lnt" class="dfinput email" placeholder="经度值" maxlength="128"/>
+                </li>
+                <li>
+                    <label>纬度<b>*</b></label>
+                    <input type="text" id="lat" class="dfinput email" placeholder="纬度值" maxlength="128"/>
+                </li>
+                <li>
+                    <label>单位联系人<b>*</b></label>
+                    <input name="" type="text" id="linkman" class="dfinput" placeholder="单位联系人"
+                           maxlength="64"/>
+                </li>
+                <li>
+                    <label>行业类型<b>*</b></label>
+                    <select id="professional" class="select select1">
+                        <option checked = "checked" value="IT">IT</option>
+                        <option value="互联网">互联网</option>
+                        <option value="环保">环保</option>
+                        <option value="纺织">纺织</option>
+                    </select>
+                </li>
+                <li>
+                    <label>人数<b>*</b></label>
+                    <input name="" type="text" id="stuffs" class="dfinput" placeholder="人数"
+                           maxlength="64"/>
+                </li>
+                <li>
+                    <label>手机号码<b>*</b></label>
+                    <input name="" type="tel" id="phone" class="dfinput" placeholder="手机号码"
+                           maxlength="11"/>
+                </li>
+            </ul>
+            <label class="confirmMsg"> </label>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!--tip-->
+<div id="tip" title="" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p></p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+
+</body>
+
+</html>

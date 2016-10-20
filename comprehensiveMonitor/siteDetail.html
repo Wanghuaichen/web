@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/laydate.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/laydateskins.css" rel="stylesheet" type="text/css"/>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui.js"></script>
+    <script type="text/javascript" src="../js/jquery.idTabs.min.js"></script>
+    <!--<script type="text/javascript" src="../js/highcharts.min.js"></script>-->
+    <!--<script type="text/javascript" src="../js/highcharts-more.min.js"></script>-->
+    <!--<script type="text/javascript" src="../js/exporting.min.js"></script>-->
+    <script src="../js/highstock.min.js"></script>
+    <script type="text/javascript" src="../js/laydate.js"></script>
+    <script type="text/javascript" src="../js/common.min.js"></script>
+    <script type="text/javascript" src="../js/siteDetail.min.js"></script>
+    <!--<script src="https://code.highcharts.com/stock/highstock.js"></script>-->
+    <!--<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>-->
+</head>
+
+<body>
+
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="indicatorList.html">综合监测</a></li>
+        <li><a href="#">详情</a></li>
+    </ul>
+</div>
+
+<div class="formbody">
+    <ul class="prosearch">
+        <!--<li><label>组态主机:</label><label id="host"></label></li>-->
+        <li><label>工厂名称：</label><label id="factoryName"></label></li>
+    </ul>
+
+    <div style="height:100px;border: 1px solid red;">
+    wincc数据展示图部分
+    </div>
+
+    <div id="usual1" class="usual">
+
+        <div class="itab">
+            <ul>
+                <li ><a href="#tab1" class="selected" id="realtime">实时图</a></li>
+                <li ><a href="#tab2" id="history">历史图</a></li>
+                <li ><a href="#tab3" id="deviceAlarm">设备故障告警</a></li>
+            </ul>
+        </div>
+
+        <div id="tab1" class="tabson">
+            指标 &nbsp;
+            <select class="searchType "name="town"  id="indicatorselect">
+            </select>
+
+            <div id="nowcontainer" style="width:100%; margin: 0 auto"></div>
+        </div>
+
+        <div id="tab2" class="tabson">
+            <ul class="toolbar">
+                <li class="checkDetail" id="linechart"><span><img src="../images/t01.min.png"/></span>曲线图</li>
+                <li class="checkDetail" id="columnchart"><span><img src="../images/t01.min.png"/></span>柱状图</li>
+            </ul>
+
+            <ul class="toolbar1">
+                <li>
+                    <select class="searchType righttoolbar" id="searchType">
+                        <option value="minute" >一分钟</option>
+                        <option value="minute10" >十分钟</option>
+                        <option value="hour" selected>小时</option>
+                        <option value="day">天</option>
+                        <option value="month">月</option>
+                        <option value="year">年</option>
+                        <option value="all">all</option>
+                    </select>
+
+                    <input placeholder="起始时间" class="scinput laydate-icon" id="starthour">
+                    <input placeholder="结束时间" class="scinput laydate-icon" id="endhour">
+                    <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+                </li>
+            </ul>
+
+            <div id="historycontainer" style=" height: 400px; margin: 0 auto;clear: both;">
+            </div>
+            <!--<div>统计信息：最大值：<label id="indicatorMax" style="padding-right: 8px"></label>最小值：<label id="indicatorMin"style="padding-right: 8px"></label> 平均值：<label id="indicatorAvg"></label></div>-->
+        </div>
+        <div id="tab3" class="tabson">
+            <table class="tablelist sortable" id="deviceAlarmTable">
+                <thead>
+                <tr>
+                    <th class="nosort" style="display: none"></th>
+                    <th style='width: 6%'><h3>序号</h3></th>
+                    <th><h3>名称</h3></th>
+                    <th><h3>设备ID</h3></th>
+                    <th><h3>设备类型</h3></th>
+                    <th><h3>最后一次下线时间</h3></th>
+                    <th><h3>所在工厂</h3></th>
+                    <th class="nosort">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div id="controls">
+                <div id="perpage">
+                    <span>每页显示</span>
+                    <select onchange="sorter.size(this.value)">
+                        <option value="5">5</option>
+                        <option value="10"selected="selected">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span>页</span>
+                </div>
+                <div id="navigation">
+                    <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+                    <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+                    <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+                    <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+                </div>
+                <div id="text">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+            </div>
+        </div>
+    </div>
+    <div class="pagin">
+        <ul class="paginList">
+            <!--<li class="paginItem"><a href="#" target="rightFrame" id="backIndicator">返回</a></li>-->
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        $("#usual1 ul").idTabs();
+    </script>
+
+</div>
+<!--tip-->
+<div id="tip" title="" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p></p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

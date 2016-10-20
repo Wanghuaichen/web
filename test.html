@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎登录后台管理系统</title>
+    <link href="css/style.min.css" rel="stylesheet" type="text/css"/>
+
+    <script language="JavaScript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cloud.min.js"></script>
+    <script src="js/common.min.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--验证码-->
+    <script type="text/javascript" src="js/vCode.min.js" charset="gbk"></script>
+    <!--省市区-->
+    <script type="text/javascript" src="js/geo.min.js"></script>
+</head>
+
+<script language="javascript">
+    function test() {
+        var ret;
+        ret = login("RootLiu", "654321");
+        //ret = dictionary("UserKinds");
+        var accessList=new Array();
+        var mgroups="all";
+        var item=new Object();
+        var user= new Object();
+        var org=new Object();
+
+        var jsonstr = getCookie("userInfo");
+        var responsedata = JSON.parse(jsonstr);
+        console.log(JSON.stringify(responsedata));
+        var userInfo = responsedata.account;
+        user.uid=userInfo.userId;
+        user.name=userInfo.userName;
+        item.user=user;
+        org.uId=userInfo.orgId;
+        org.name=userInfo.org;
+        item.org=org;
+        accessList[0]=item;
+    //    ret = resaccessCreate(accessList,mgroups);
+        ret = resaccessList(user.uid);
+   //     ret = resaccessList("all");
+        return;
+    }
+</script>
+
+<body>
+    <input name="" type="button" class="loginbtn" value="test" onclick="test()"/>
+</body>
+
+</html>

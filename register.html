@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎登录环保管理系统</title>
+    <link href="css/style.min.css" rel="stylesheet" type="text/css"/>
+
+    <script language="JavaScript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cloud.min.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--验证码-->
+    <script type="text/javascript" src="js/vCode.min.js" charset="gbk"></script>
+    <!--省市区-->
+    <script type="text/javascript" src="js/geo.min.js"></script>
+
+    <script language="javascript">
+        $(function () {
+            $('.registerbox').css({'position': 'absolute', 'left': ($(window).width() - 450) / 2});
+            $(window).resize(function () {
+                $('.registerbox').css({'position': 'absolute', 'left': ($(window).width() - 450) / 2});
+            });
+//            jQuery.noConflict();
+            /*var dialog = $("#add-org").dialog({
+                autoOpen: false,
+                height: 450,
+                width: 530,
+                modal: true,
+                buttons: [{
+                    text:"Ok",
+                    click:function(){
+                        dialog.dialog("close");
+                    },
+                    class:"sure",
+                },{
+                    text:"cancel",
+                    click:function(){
+                        dialog.dialog("close");
+                    },
+                    class:"cancel",
+                }]
+            });
+            $(".sure").click(function(){
+                dialog.dialog("open");
+            });*/
+
+            var container1 = document.getElementById("vCode1");
+            var code1 = new vCode(container1);
+        });
+    </script>
+
+</head>
+
+<body style="background-color:#1c77ac; background-image:url(images/light.min.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;"
+      onload="setup();preselect('省份');">
+
+
+<div id="mainBody">
+    <div id="cloud1" class="cloud"></div>
+    <div id="cloud2" class="cloud"></div>
+</div>
+
+
+<div class="logintop">
+    <span>欢迎登录环保管理系统</span>
+    <ul>
+        <li><a href="login.html">回首页</a></li>
+        <li><a href="#">帮助</a></li>
+        <li><a href="#">关于</a></li>
+    </ul>
+</div>
+
+<div class="registerbody">
+
+    <!--<span class="systemlogo"></span>-->
+
+    <div class="registerbox">
+        <ul>
+            <li>
+                <label>用户名<b>*</b></label>
+                <input name="" type="text" class="dfinput userName" placeholder="用户名"
+                       onclick="JavaScript:this.value=''"/>
+            </li>
+            <li>
+                <label>密码<b>*</b></label>
+                <input name="" type="password" class="dfinput pwd" placeholder="密码" onclick="JavaScript:this.value=''"/>
+            </li>
+            <li>
+                <label>确认密码<b>*</b></label>
+                <input name="" type="password" class="dfinput confirmpwd" placeholder="确认密码"
+                       onclick="JavaScript:this.value=''"/>
+            </li>
+            <li>
+                <label>真实姓名<b>*</b></label>
+                <input name="" type="password" class="dfinput pwd" placeholder="真实姓名" onclick="JavaScript:this.value=''"/>
+            </li>
+            <!--<li>-->
+                <!--<label>所属单位<b>*</b></label>-->
+                <!--<div class="registerSelect">-->
+                    <!--<select class="select select1">-->
+                        <!--<option>单位1</option>-->
+                    <!--</select>-->
+                    <!--<input type="button" class="sure" value="添加"/>-->
+                <!--</div>-->
+            <!--</li>-->
+           <!-- <li>
+                <label>联系人<b>*</b></label>
+                <input name="" type="text" class="dfinput linkMan" placeholder="联系人"
+                       onclick="JavaScript:this.value=''"/>
+            </li>-->
+            <li>
+                <label>联系电话<b>*</b></label>
+                <input name="" type="tel" class="dfinput tel" placeholder="电话" onclick="JavaScript:this.value=''"/>
+            </li>
+            <li>
+                <label>邮箱<b>*</b></label>
+                <input name="" type="email" class="dfinput email" placeholder="邮箱" onclick="JavaScript:this.value=''"/>
+            </li>
+           <!-- <li>
+                <label>所在地<b>*</b></label>
+
+                <div class="usercity">
+
+                    &lt;!&ndash;<div class="province">&ndash;&gt;
+                        <select class="select" name="province" id="s1">
+                            <option></option>
+                        </select>
+                    &lt;!&ndash;</div>&ndash;&gt;
+                    &lt;!&ndash;<div class="city">&ndash;&gt;
+                        <select class="select"name="city" id="s2">
+                            <option></option>
+                        </select>
+                    &lt;!&ndash;</div>&ndash;&gt;
+                    &lt;!&ndash;<div class="district">&ndash;&gt;
+                        <select class="select"name="town" id="s3">
+                            <option></option>
+                        </select>
+                    &lt;!&ndash;</div>&ndash;&gt;
+                </div>
+
+            </li>
+            <li>
+                <label>详细地址<b>*</b></label>
+                <input name="" type="text" class="dfinput email" placeholder="详细地址" onclick="JavaScript:this.value=''"/>
+            </li>-->
+            <li>
+                <label>验证码<b>*</b></label>
+                <input name="" type="text" placeholder="验证码" class="dfinput valication"
+                       onclick="JavaScript:this.value=''"/>
+                <div id="vCode1" style="width:100px; height: 32px; border: 1px solid #ccc; display: inline-block;"></div>
+            </li>
+            <li>
+                <input name="" type="button" class="loginbtn" value="注册"
+                       onclick="javascript:window.location='main.html'"/>
+                <a href="login.html">登录</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div class="loginbm">版权所有 2015 CYWEE </div>
+
+<!--&lt;!&ndash; dialog&ndash;&gt;
+<div id="add-org" class="dialog" title="添加组织">
+    <p class="validateTips">认真填写下面内容</p>
+
+    <form>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>单位名称<b>*</b></label>
+                    <input name="" type="text" class="dfinput" placeholder="单位名称"
+                           onclick="JavaScript:this.value=''"/>
+                </li>
+                <li>
+                    <label>单位类型<b>*</b></label>
+                    <select class="select select1">
+                        <option>运营商</option>
+                        <option>环保局</option>
+                        <option>设备商</option>
+                        <option>工厂</option>
+                    </select>
+                </li>
+                <li>
+                    <label>所在地<b>*</b></label>
+
+                    <div class="usercity">
+
+                        &lt;!&ndash;<div class="province">&ndash;&gt;
+                        <select class="select select2" name="province" id="s1">
+                            <option></option>
+                        </select>
+                        &lt;!&ndash;</div>&ndash;&gt;
+                        &lt;!&ndash;<div class="city">&ndash;&gt;
+                        <select class="select select2"name="city" id="s2">
+                            <option></option>
+                        </select>
+                        &lt;!&ndash;</div>&ndash;&gt;
+                        &lt;!&ndash;<div class="district">&ndash;&gt;
+                        <select class="select select2"name="town" id="s3">
+                            <option></option>
+                        </select>
+                        &lt;!&ndash;</div>&ndash;&gt;
+                    </div>
+
+                </li>
+                <li>
+                    <label>详细地址<b>*</b></label>
+                    <input name="" type="text" class="dfinput email" placeholder="详细地址" onclick="JavaScript:this.value=''"/>
+                </li>
+                <li>
+                    <label>单位联系人<b>*</b></label>
+                    <input name="" type="text" class="dfinput" placeholder="单位联系人"
+                           onclick="JavaScript:this.value=''"/>
+                </li>
+                <li>
+                    <label>电话<b>*</b></label>
+                    <input name="" type="text" class="dfinput" placeholder="电话"
+                           onclick="JavaScript:this.value=''"/>
+                </li>
+            </ul>
+
+            &lt;!&ndash; Allow form submission with keyboard without duplicating the dialog button &ndash;&gt;
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>-->
+
+</body>
+
+</html>

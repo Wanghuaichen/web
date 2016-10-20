@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script language="JavaScript" src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <link href="css/style.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" language="JavaScript">
+        $(function(){
+            /* var $doc;
+             if(window.location!=window.parent.location){
+             $doc=window.parent.jQuery.noConflict();
+             }else{
+             $doc=jQuery.noConflict();
+             }
+             //
+             $("body").append("<div id='tip' title='提示信息'>" +
+             "<div class='tipinfo'>" +
+             "<div class='tipright'><p>cywee 环保管理系统  Version 1.0.1</p><!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>--></div>" +
+             "</div></div>");*/
+             var tipdialog = $("#tip");
+             //    tipdialog.html("");
+             tipdialog.dialog({
+             autoOpen: false,
+             height: 300,
+             width: 530,
+             modal: true,
+             buttons: [{
+             text:"确定",
+             click:function(){
+             tipdialog.dialog("close");
+             },
+             class:"sure",
+             }],
+             });
+            tipdialog.dialog("open");
+
+            /*var dialog=$doc("#dialog");
+             dialog.html("欢迎你");
+             dialog.dialog( {modal: true});*/
+        })
+
+
+
+        function iFrameHeight() {
+            var ifm= document.getElementById("iframepage");
+            var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
+            if(ifm != null && subWeb != null) {
+                ifm.height = subWeb.body.scrollHeight;
+//                ifm.width = subWeb.body.scrollWidth;
+            }
+        }
+    </script>
+
+</head>
+<body>
+<iframe src="devices/device.html" id="iframepage" frameborder="0" width="100%" scrolling="no" marginheight="0" marginwidth="0" onLoad="iFrameHeight()"></iframe>
+<!--tip-->
+<div id="tip" title="提示信息">
+
+    <div class="tipinfo">
+        <!--<span><img src="../images/ticon.png" /></span>-->
+        <div class="tipright">
+            <p>cywee 环保管理系统
+                Version 1.0.1！</p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

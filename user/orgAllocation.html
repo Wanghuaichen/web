@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <!--从数据库获取数据-->
+    <script src="../js/common.min.js"></script>
+    <!--界面组件填充值-->
+    <script src="../js/orgAllocation.min.js"></script>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">用户管理</a></li>
+        <li><a href="#">资源分配</a></li>
+    </ul>
+</div>
+
+<div class="mainbox dialog">
+    <div class="resourceSelect orgUserSelect">
+        <!--组织列表-->
+        <div>组织列表:<select class="select" id="orglist" title="组织列表"><option></option></select></div>
+        <!--用户列表-->
+        <div>用户列表:<select class="select" id="userlist" title="用户列表"><option></option></select></div>
+
+    </div>
+</div>
+<div class="mainbox">
+    <div class="mainleft">
+        <div class="listtitle">子系统权限分配：</div>
+        <ul class="toollist">
+            <li class="firstli">
+                <table class="tablelist resourceTable sortable" id="userOrg">
+                    <thead>
+                    <tr>
+                        <th  style="display: none"></th>
+                        <th class="nosort"><input name="checkbox" id="checkAll1" type="checkbox"/></th>
+                        <th>已分配组织</th>
+                        <!--<th>操作</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="controls" class="controls">
+                    <div id="perpage" class="perpage">
+                        <span>每页显示</span>
+                        <select onchange="sorter.size(this.value)">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span>页</span>
+                    </div>
+                    <div id="navigation" class="navigation">
+                        <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+                        <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+                        <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+                        <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+                    </div>
+                    <div id="text" class="pagetext">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+                </div>
+            </li>
+            <li class="secondli">
+                <div class="op">
+                    <a class="ibtn" id="btnLeftAll">&lt;&lt;全部左移</a><br/>
+                    <a class="ibtn" id="btnLeft">&lt;左移</a><br/>
+                    <a class="ibtn" id="btnRightAll">全部右移&gt;</a><br/>
+                    <a class="ibtn" id="btnRight">右移&gt;&gt;</a>
+                    <a class="ibtn" id="submit">应用</a>
+                </div>
+            </li>
+            <li class="thirdli">
+                <table class="tablelist resourceTable sortable" id="allOrg">
+                    <thead>
+                    <tr>
+                        <th  style="display: none"></th>
+                        <th class="nosort" ><input name="checkbox" id="checkAll2" type="checkbox"/></th>
+                        <th>未分配组织</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="un_controls" class="controls">
+                    <div id="un_perpage" class="perpage">
+                        <span>每页显示</span>
+                        <select onchange="allTableSorter.size(this.value)">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span>页</span>
+                    </div>
+                    <div id="un_navigation" class="navigation">
+                        <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="allTableSorter.move(-1,true)" />
+                        <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="allTableSorter.move(-1)" />
+                        <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="allTableSorter.move(1)" />
+                        <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="allTableSorter.move(1,true)" />
+                    </div>
+                    <div id="un_text" class="pagetext">第<span id="un_currentpage"></span> 页/共<span id="un_pagelimit"></span>页</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var sorter = new TINY.table.sorter("sorter");
+    sorter.head = "head";
+    sorter.asc = "asc";
+    sorter.desc = "desc";
+    sorter.even = "evenrow";
+    sorter.odd = "oddrow";
+    sorter.evensel = "evenselected";
+    sorter.oddsel = "oddselected";
+    sorter.paginate = true;
+    sorter.currentid = "currentpage";
+    sorter.limitid = "pagelimit";
+
+    var allTableSorter = new TINY.table.sorter("allTableSorter");
+    allTableSorter.head = "head";
+    allTableSorter.asc = "asc";
+    allTableSorter.desc = "desc";
+    allTableSorter.even = "evenrow";
+    allTableSorter.odd = "oddrow";
+    allTableSorter.evensel = "evenselected";
+    allTableSorter.oddsel = "oddselected";
+    allTableSorter.paginate = true;
+    allTableSorter.currentid = "un_currentpage";
+    allTableSorter.limitid = "un_pagelimit";
+    //        sorter.init("table",1);
+</script>
+<!-- 应用功能dialog-->
+<div id="funcDialog" class="device" title="应用功能列表" style="display: none">
+    <p class="validateTips">功能项：</p>
+    <table class="tablelist" id="funcTable">
+        <thead>
+        <tr>
+            <th style="display: none"></th>
+            <th>序号<i class="sort"><img src="../images/px.gif"/></i></th>
+            <th>名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+
+</body>
+
+</html>

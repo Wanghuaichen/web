@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;IE=8" />
+<title>无标题文档</title>
+<link href="css/style.min.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" src="js/jquery.js"></script>
+    <script language="JavaScript" src="js/json2.js"></script>
+    <script type="text/javascript" src="js/common.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+<script type="text/javascript" language="JavaScript">
+$(function(){	
+	//顶部导航切换
+	$(".nav li a").click(function(){
+		$(".nav li a.selected").removeClass("selected")
+		$(this).addClass("selected");
+	})
+
+    $("#exit").click(function(){
+        delCookie("userInfo");
+    });
+    $("#about").click(function(){
+        about();
+    });
+    $("#loginuserInfo").click(function(){
+        userInfo.id = userInfo.userId;
+        setCookie("userselected",JSON.stringify(userInfo));
+    });
+
+    var cookieObject = JSON.parse(getCookie("userInfo"));
+    var userInfo = cookieObject.account;
+    $("#loginuserInfo").text("登录为 "+userInfo.userName);
+    $("#orginfo").text(userInfo.org);
+
+    //关于弹出框
+    function about(){
+        var document = window.parent.frames["rightFrame"].document;
+        var aboutTip = document.getElementById("aboutTip");
+        if(aboutTip == undefined){
+            var dialog = document.createElement("div");
+            dialog.id = "aboutTip";
+            dialog.style.display = "none";
+            var tipinfo = document.createElement("div");
+            tipinfo.className = "tipinfo";
+            var tipright = document.createElement("div");
+            tipright.className = "tipright";
+            var p = document.createElement("p");
+            p.textContent=userInfo.org+"物联网管理系统  Version 1.0.1";
+
+            dialog.appendChild(tipinfo);
+            tipinfo.appendChild(tipright);
+            tipright.appendChild(p);
+            document.body.appendChild(dialog);
+            aboutTip = document.getElementById("aboutTip");
+        }
+        var $abouttip = $(aboutTip);
+        $abouttip.dialog({
+            title:"关于",
+            height: 280,
+            width: 530,
+            modal: true,
+            buttons: [{
+                text:"确定",
+                click:function(){
+                    $abouttip.dialog("close");
+                },
+                class:"sure"
+            }],
+            autoOpen: false
+        });
+        $abouttip.dialog("open");
+    }
+})
+
+
+</script>
+
+
+</head>
+
+<body style="background:url(images/topbg.gif) repeat-x;">
+
+    <div class="topleft">
+    <!--<img src="images/logo.png" title="系统首页" />-->
+        <p class="text" style="font-size:25px;color:white;font-style:italic;" id="orginfo"></p>
+        <p class="text" style="font-size:16px;color:white;" id="logoinfo">物联网管理系统</p>
+    </div>
+            
+    <div class="topright">
+    <ul>
+    <!--<li><span><img src="images/help.png" title="帮助"  class="helpimg"/></span><a href="#">帮助</a></li>-->
+
+    <li><a href="user/checkUserDetail.html"  target="rightFrame" id="loginuserInfo"></a></li>
+    <li><a href="#"  id="about">关于</a></li>
+    <li><a href="login.html" target="_parent" id="exit" onclick="">退出</a></li>
+
+    </ul>
+    
+    </div>
+</body>
+</html>

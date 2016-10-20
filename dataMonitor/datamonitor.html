@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css" />
+    <!--<link href="../css/select.css" rel="stylesheet" type="text/css" />-->
+    <link href="../css/laydate.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/laydateskins.css" rel="stylesheet" type="text/css"/>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script type="text/javascript" src="../js/jquery.idTabs.min.js"></script>
+    <script type="text/javascript" src="../js/highcharts.min.js"></script>
+    <script type="text/javascript" src="../js/highcharts-more.min.js"></script>
+    <script type="text/javascript" src="../js/exporting.min.js"></script>
+    <script type="text/javascript" src="../js/laydate.js"></script>
+    <script type="text/javascript" src="../js/common.min.js"></script>
+    <script type="text/javascript" src="../js/datamonitor.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="indicatorList.html">数据监测</a></li>
+        <li><a href="#" id="currentPagetitle"></a></li>
+    </ul>
+</div>
+
+<div class="formbody">
+    <div class="tools">
+        <ul class="toolbar1">
+            <li>
+                <select class="searchType righttoolbar" id="searchType">
+                    <option value="factoryName">工厂名称</option>
+                    <option value="devId" selected>设备Id</option>
+                </select>
+                <input type="text" class="scinput" id="searchByName"/>
+                <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+            </li>
+        </ul>
+    </div>
+    <div id="usual1" class="usual">
+
+        <div class="itab">
+            <ul>
+                <li ><a href="#tab1" class="selected" id="realtime">实时数据监测</a></li>
+                <li ><a href="#tab2" id="history">历史数据监测</a></li>
+                <li ><a href="#tab3" id="realWarm">实时警告</a></li>
+                <li ><a href="#tab4" id="historyWarm">历史警告查询</a></li>
+            </ul>
+        </div>
+
+        <div id="tab1" class="tabson">
+            <ul class="toolbar entoolbar" style="margin: 0px 0px 5px 0px">
+                <li class="checkDetail siteCompare"><span><img src="../images/t01.min.png"/></span>站点对比图</li>
+            </ul>
+            <table class="tablelist sortable" id="realTimeTable">
+                <thead>
+                <tr>
+                    <th class="nosort" style="display: none"></th>
+                    <th style='width: 6%'><h3>序号</h3></th>
+                    <th><h3>站点</h3></th>
+                    <th><h3>当前值</h3></th>
+                    <th><h3>阈值</h3></th>
+                    <th><h3>单位</h3></th>
+                    <th><h3>设备Id</h3></th>
+                    <th class="nosort">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div id="controls">
+                <div id="perpage">
+                    <span>每页显示</span>
+                    <select onchange="sorter.size(this.value)">
+                        <option value="5">5</option>
+                        <option value="10"selected="selected">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span>页</span>
+                </div>
+                <div id="navigation">
+                    <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+                    <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+                    <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+                    <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+                </div>
+                <div id="text">第<span id="realCurrentpage"></span> 页/共<span id="realPagelimit"></span>页</div>
+            </div>
+        </div>
+        <div id="tab2" class="tabson">
+            <ul class="toolbar entoolbar">
+                <li class="checkDetail siteCompare"><span><img src="../images/t01.min.png"/></span>站点对比图</li>
+            </ul>
+            <ul class="toolbar1 entoolbar" style="margin: 0px 0px 5px 0px">
+                <li>
+                    <input placeholder="起始时间" class="scinput laydate-icon" id="starthour">
+                    <input placeholder="结束时间" class="scinput laydate-icon" id="endhour">
+                </li>
+            </ul>
+            <table class="tablelist sortable" id="historyTable">
+                <thead>
+                <tr>
+                    <th class="nosort" style="display: none"></th>
+                    <th style='width: 6%'><h3>序号</h3></th>
+                    <th><h3>站点</h3></th>
+                    <th><h3>当前值</h3></th>
+                    <th><h3>阈值</h3></th>
+                    <th><h3>单位</h3></th>
+                    <th><h3>设备Id</h3></th>
+                    <th class="nosort">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="controls">
+                <div class="perpage">
+                    <span>每页显示</span>
+                    <select onchange="sorter.size(this.value)">
+                        <option value="5">5</option>
+                        <option value="10"selected="selected">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span>页</span>
+                </div>
+                <div class="navigation">
+                    <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+                    <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+                    <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+                    <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+                </div>
+                <div class="pagetext">第<span id="historyCurrentpage"></span> 页/共<span id="historyPagelimit"></span>页</div>
+            </div>
+        </div>
+        <div id="tab3" class="tabson">
+            <div id = "realAlarmList" style="color: red;"></div>
+        </div>
+        <div id="tab4" class="tabson">
+            <ul class="toolbar entoolbar" style="margin: 0px 0px 5px 0px">
+                <li>
+                    <input placeholder="起始时间" class="scinput laydate-icon" id="alarmstarthour">
+                    <input placeholder="结束时间" class="scinput laydate-icon" id="alarmendhour">
+                </li>
+            </ul>
+            <table class="tablelist sortable" id="alarmHistoryTable">
+                <thead>
+                <tr>
+                    <th class="nosort" style="display: none"></th>
+                    <th style='width: 6%'><h3>序号</h3></th>
+                    <th><h3>工厂名称</h3></th>
+                    <th><h3>指标名称</h3></th>
+                    <th><h3>指标值</h3></th>
+                    <th><h3>阀值</h3></th>
+                    <th><h3>单位</h3></th>
+                    <th><h3>时间</h3></th>
+                    <th><h3>状态</h3></th>
+                    <th class="nosort">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div id="showNoData" style="display: none;text-align: center;color: red;font-size: 16px">当前告警没有数据！可选择其他工厂</div>
+            <div class="controls">
+                <div class="perpage">
+                    <span>每页显示</span>
+                    <select onchange="sorter.size(this.value)">
+                        <option value="5">5</option>
+                        <option value="10"selected="selected">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span>页</span>
+                </div>
+                <div class="navigation">
+                    <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+                    <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+                    <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+                    <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+                </div>
+                <div class="pagetext">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+            </div>
+        </div>
+    </div>
+    <div class="pagin">
+        <ul class="paginList">
+            <li class="paginItem"><a href="#" target="rightFrame" id="backIndicator">返回</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        $("#usual1 ul").idTabs();
+    </script>
+</div>
+<!--指标对比显示-->
+<div id="compareWindow" title="指标浓度对比">
+    <!--<div id="usual" class="usual">-->
+        <!--<div class="itab">-->
+            <!--<ul>-->
+                <!--<li><a href='#tabcompare' class ='selected'>指标</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--<div id='tabcompare' class='tabson'></div>-->
+    <!--</div>-->
+
+    <div id="dataMonitorContainer" style=" height: 300px; margin: 0 auto;clear: both;">
+    </div>
+</div>
+</body>
+</html>

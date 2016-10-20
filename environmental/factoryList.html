@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/laydate.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/laydateskins.css" rel="stylesheet" type="text/css"/>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+
+    <script type="text/javascript" src="../js/jquery.js"></script>
+
+    <script src="../js/jquery-ui.js"></script>
+    <!--日期控件-->
+    <script type="text/javascript" src="../js/laydate.js"></script>
+    <!--从数据库获取数据-->
+    <!--<script src="../js/common.min.js"></script>-->
+    <script src="../sourceCode/js/common.js"></script>
+    <!--给UI赋值-->
+    <script src="../js/factoryList.min.js"></script>
+    <!--省市区-->
+    <script type="text/javascript" src="../js/geo.min.js"></script>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">数据管理</a></li>
+        <li><a href="#">德图数据</a></li>
+    </ul>
+</div>
+
+<div class="rightinfo">
+
+    <div class="tools">
+
+        <ul class="toolbar">
+            <li class="addData"><span><img src="../images/t01.min.png"/></span>数据添加</li>
+            <li class="importDataDialog"><span><img src="../images/t01.min.png"/></span>导入excel数据</li>
+            <!--<li><span><img src="../images/t04.png"/></span>统计</li>-->
+        </ul>
+        <ul class="toolbar1">
+            <li>
+                <select class="searchType righttoolbar" id="searchType">
+                    <option>全部</option>
+                    <option>单位名称</option>
+                    <option>单位地址</option>
+                </select>
+
+                <div class="usercity" id="searchByAddress"style="display: none">
+
+                    <!--<div class="province">-->
+                    <select class="searchType righttoolbar" name="province" id="search1">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="city">-->
+                    <select class="searchType righttoolbar"name="city" id="search2">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="district">-->
+                    <select class="searchType righttoolbar"name="town" id="search3">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                </div>
+                <input type="text" class="scinput" id="searchByName"/>
+                <!--<input type="button" class="sure" value="查询"/>-->
+                <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+            </li>
+        </ul>
+
+    </div>
+<!--class="tablelist orgTable"-->
+    <table class="tablelist orgTable sortable" id="orgTable">
+        <thead>
+        <tr>
+            <th class="nosort" style="display: none"></th>
+            <th class="nosort" style='width: 4%'><input name="checkbox" id="checkAll" type="checkbox"/></th>
+            <th style='width: 6%'><h3>序号</h3></th>
+            <th><h3>单位名称</h3></th>
+            <!--<th><h3>单位类型</h3></th>-->
+            <th><h3>单位地址</h3></th>
+            <th><h3>最后一次录入时间</h3></th>
+            <!--<th><h3>经度</h3></th>-->
+            <!--<th><h3>纬度</h3></th>-->
+            <!--<th><h3>单位联系人</h3></th>-->
+            <!--<th><h3>联系电话</h3></th>-->
+            <th class="nosort">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="controls">
+        <div id="perpage">
+            <span>每页显示</span>
+            <select onchange="sorter.size(this.value)">
+                <option value="1">1</option>
+                <option value="5">5</option>
+                <option value="10" selected="selected">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>页</span>
+        </div>
+        <div id="navigation">
+            <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+            <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+            <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+            <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+        </div>
+        <div id="text">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+    </div>
+    <script type="text/javascript">
+        var sorter = new TINY.table.sorter("sorter");
+        sorter.head = "head";
+        sorter.asc = "asc";
+        sorter.desc = "desc";
+        sorter.even = "evenrow";
+        sorter.odd = "oddrow";
+        sorter.evensel = "evenselected";
+        sorter.oddsel = "oddselected";
+        sorter.paginate = true;
+        sorter.currentid = "currentpage";
+        sorter.limitid = "pagelimit";
+//        sorter.init("table",1);
+    </script>
+</div>
+<!--tip-->
+<div id="tip" title="" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p></p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+<!-- add-data dialog-->
+<div id="add-data" class="dialog" title="手动添加数据" style="display: none">
+    <p class="validateTips">认真填写下面内容<label style="color: red;">（登记时间，先选择时分秒，再选择日期！）</label></p>
+
+    <form>
+        <fieldset>
+            <table class="addManualData">
+                <tr>
+                    <td><label>登记时间<b>*</b></label></td>
+                    <td>
+                        <input placeholder="登记时间(先选择时分秒，再选择日期！)" class="dfinput laydate-icon" style="width:230px" id="recordTime">
+                    </td>
+                    <td><label>O2(%)</label></td>
+                    <td><input name="" type="text" class="dfinput tinput" placeholder="O2" id="O2"/></td>
+                </tr><tr>
+                    <td><label>CO(ppm)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="CO" id="CO" /></td>
+                    <td><label>CO2(%)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="CO2" id="CO2" /></td>
+                </tr><tr>
+                    <td><label>NO(ppm)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="NO" id="NO" /></td>
+                    <td><label>NO2(ppm)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="NO2" id="NO2" /></td>
+                </tr><tr>
+                    <td><label>烟温(℃)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="烟温" id="yanwen" /></td>
+                    <td><label>NOx(ppm)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="NOx" id="NOx" /></td>
+                </tr>
+                <tr>
+                    <td><label>SO2(ppm)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="SO2" id="SO2" /></td>
+                    <td><label>净效率(%)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="净效率" id="jingxiaolv" /></td>
+                </tr>
+                <tr>
+                    <td><label>毛效率(%)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="毛效率" id="maoxiaolv" /></td>
+                    <td><label>泵流量(l/min)</label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="泵流量" id="bengliuliang" /></td>
+                </tr>
+                <tr>
+                    <!--<td><label>环温(℃)</label></td>-->
+                    <!--<td><input type="text" class="dfinput tinput" placeholder="环温" id="huanwen" /></td>-->
+                    <!--<td><label>稀释倍数(倍)</label></td>-->
+                    <!--<td><input type="text" class="dfinput tinput" placeholder="稀释倍数" id="xishibeishu" /></td>-->
+                </tr>
+            </table>
+            <label class="confirmMsg"> </label>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+
+<!-- import-data dialog-->
+<div id="import-data" class="dialog" title="导入excel数据" style="display: none">
+    <p class="validateTips">认真填写下面内容</p>
+    <form>
+        <fieldset>
+            <ul id="updateManualData">
+                <li>
+                    <label>选择文件<b>*</b></label>
+                    <input type="file" id="fileName"  accept="*.txt/*.xls/*.xlsx" style="display: none"/>
+                    <input type="text" class="dfinput" id="showFile" placeholder="浏览文件">
+                    <input type="button" id="browse" class="cancel"  value="浏览..."/>
+                    <!--<input type="button" id="importData" class="sure" value="导入"/>-->
+                </li>
+            </ul>
+            <div id="progressbar"><img src="../images/progressbar2.jpg"></div>
+            <!--<div id="progressbar"><div class="progress-label">Loading...</div></div>-->
+            <label id="confirmMsg" class="confirmMsg"> </label>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+    $('.addManualData tbody tr td:odd').addClass('deviceodd');
+    $('.addManualData tbody tr td:even').addClass('deviceeven');
+</script>
+
+</body>
+
+</html>

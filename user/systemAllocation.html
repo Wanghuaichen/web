@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <!--从数据库获取数据-->
+    <script src="../js/common.min.js"></script>
+    <!--界面组件填充值-->
+    <script src="../js/systemAllocation.min.js"></script>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">用户管理</a></li>
+        <li><a href="#">资源分配</a></li>
+    </ul>
+</div>
+
+<div class="mainbox dialog">
+    <div class="resourceSelect orgUserSelect">
+        <!--组织列表-->
+        <div>组织列表:<select class="select" id="orglist" title="组织列表"><option></option></select></div>
+        <!--用户列表-->
+        <div>用户列表:<select class="select" id="userlist" title="用户列表"><option></option></select></div>
+
+    </div>
+</div>
+<div class="mainbox">
+    <div class="mainleft">
+        <div class="listtitle">子系统权限分配：</div>
+        <ul class="toollist">
+            <li class="firstli">
+                <table class="tablelist resourceTable" id="userSystem">
+                    <thead>
+                    <tr>
+                        <th  style="display: none"></th>
+                        <th><input name="checkbox" id="checkAll1" type="checkbox"/></th>
+                        <th>已分配组织</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </li>
+            <li class="secondli">
+                <div class="op">
+                    <a class="ibtn" id="btnLeftAll">&lt;&lt;全部左移</a><br/>
+                    <a class="ibtn" id="btnLeft">&lt;左移</a><br/>
+                    <a class="ibtn" id="btnRightAll">全部右移&gt;</a><br/>
+                    <a class="ibtn" id="btnRight">右移&gt;&gt;</a>
+                </div>
+            </li>
+            <li class="thirdli">
+                <table class="tablelist resourceTable" id="allSystem">
+                    <thead>
+                    <tr>
+                        <th  style="display: none"></th>
+                        <th><input name="checkbox" id="checkAll2" type="checkbox"/></th>
+                        <th>未分配组织</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 应用功能dialog-->
+<div id="funcDialog" class="device" title="应用功能列表" style="display: none">
+    <p class="validateTips">功能项：</p>
+    <table class="tablelist" id="funcTable">
+        <thead>
+        <tr>
+            <th style="display: none"></th>
+            <th>序号<i class="sort"><img src="../images/px.gif"/></i></th>
+            <th>名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+
+</body>
+
+</html>

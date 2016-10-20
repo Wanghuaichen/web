@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/laydate.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/laydateskins.css" rel="stylesheet" type="text/css"/>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <!--省市区-->
+    <script type="text/javascript" src="../js/dyngeo.min.js"></script>
+
+    <script type="text/javascript" src="../js/json2.js"></script>
+
+    <script type="text/javascript" src="../js/common.min.js"></script>
+    <!-- 百度地图调用接口-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=bpPDopdlu4T8fkPfmp1i7n97"></script>
+    <script type="text/javascript" src="../js/laydate.js"></script>
+    <script type="text/javascript" src="../js/indicatorMap.min.js"></script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">数据管理</a></li>
+        <li><a href="#">地图展示</a></li>
+    </ul>
+</div>
+<div id="container">
+</div>
+<div class="rightinfo topInquire">
+
+        <div class="tools">
+
+            <ul class="toolbar entoolbar">
+                <li>
+                    区域 &nbsp;
+                    <div class="usercity" id="searchByAddress" style="display: inline">
+
+                        <!--<select class="searchType lefttoolbar"name="town" id="search3" onchange="search3()">-->
+                            <!--<option></option>-->
+                        <!--</select>-->
+                        <select class="searchType" name="province" id="search1">
+                            <option></option>
+                        </select>
+                        <select class="searchType"name="city" id="search2">
+                            <option></option>
+                        </select>
+                        <select class="searchType"name="indicator" id="showIndicator">
+                            <option value="auto" selected>自动指标</option>
+                            <option value="manual">德图指标</option>
+                        </select>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="toolbar1">
+                <li>
+                    <input placeholder="日期" class="scinput laydate-icon" id="startday">
+                    <!--<input type="button" class="sure" value="查询"/>-->
+                    <img class="searchpng lefttoolbar" id="searchpng" src="../images/ico06.min.png" style="padding-left: 10px;padding-right: 5px;"/>
+                    <!--<select class="searchType lefttoolbar" id="timeList" style="display: inline"></select>-->
+                </li>
+            </ul>
+        </div>
+
+    <!--要查询的地址：<input id="text_" type="text" value="宁波天一广场" style="margin-right:100px;"/>
+    查询结果(经纬度)：<input id="result_" type="text" />
+    <input type="button" value="查询" onclick="searchByStationName();"/>-->
+</div>
+</body>
+</html>

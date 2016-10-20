@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css" />
+    <!--<link href="../css/select.css" rel="stylesheet" type="text/css" />-->
+    <link href="../css/laydate.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/laydateskins.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script type="text/javascript" src="../js/jquery.idTabs.min.js"></script>
+    <!--<script type="text/javascript" src="../js/highcharts.min.js"></script>-->
+    <script type="text/javascript" src="../js/highcharts-more.min.js"></script>
+    <script type="text/javascript" src="../js/exporting.min.js"></script>
+    <script src="../js/highstock.min.js"></script>
+    <!--<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>-->
+    <!--<script src="http://code.highcharts.com/highcharts-more.js"></script>-->
+    <script type="text/javascript" src="../js/laydate.js"></script>
+    <script type="text/javascript" src="../js/common.min.js"></script>
+    <script type="text/javascript" src="../js/indicatorDetail.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="indicatorList.html">数据管理</a></li>
+        <li><a href="#">详情</a></li>
+    </ul>
+</div>
+
+<div class="formbody">
+    <ul class="prosearch">
+        <li><label>设备提供商:</label><label id="deviceProvider"></label></li>
+        <!--<li><label>组态主机:</label><label id="host"></label></li>-->
+        <li><label>工厂名称:</label><label id="factoryName"></label></li>
+    </ul>
+
+    <div id="usual1" class="usual">
+
+        <div class="itab">
+            <ul>
+                <li ><a href="#tab1" class="selected" id="realtime">实时图</a></li>
+                <li ><a href="#tab2" id="history">历史图</a></li>
+            </ul>
+        </div>
+
+        <div id="tab1" class="tabson">
+            <div id="nowcontainer" style="width:100%; margin: 0 auto"></div>
+
+        </div>
+
+        <div id="tab2" class="tabson">
+            <ul class="toolbar">
+                <li class="checkDetail" id="linechart"><span><img src="../images/t01.min.png"/></span>曲线图</li>
+                <li class="checkDetail" id="columnchart"><span><img src="../images/t01.min.png"/></span>柱状图</li>
+            </ul>
+
+            <ul class="toolbar1">
+                <li>
+                    <select class="searchType righttoolbar" id="searchType">
+                        <option value="minute" >一分钟</option>
+                        <option value="minute10" >十分钟</option>
+                        <option value="hour" selected>小时</option>
+                        <option value="day">天</option>
+                        <option value="month">月</option>
+                        <option value="year">年</option>
+                        <option value="all">all</option>
+                    </select>
+
+                    <!--<input placeholder="起始时间" class="scinput laydate-icon" id="startminute">-->
+                    <!--<input placeholder="结束时间" class="scinput laydate-icon" id="endminute">-->
+                    <!--<input placeholder="起始时间" class="scinput laydate-icon" id="start10minute">-->
+                    <!--<input placeholder="结束时间" class="scinput laydate-icon" id="end10minute">-->
+                    <input placeholder="起始时间" class="scinput laydate-icon" id="starthour">
+                    <input placeholder="结束时间" class="scinput laydate-icon" id="endhour">
+                    <!--<input placeholder="起始时间" class="scinput laydate-icon" id="startday" >-->
+                    <!--<input placeholder="结束时间" class="scinput laydate-icon" id="endday" >-->
+                    <!--<input placeholder="起始月" class="scinput laydate-icon" id="startmonth">-->
+                    <!--<input placeholder="结束月" class="scinput laydate-icon" id="endmonth" >-->
+                    <!--<input placeholder="起始年" class="scinput laydate-icon" id="startyear" >-->
+                    <!--<input placeholder="结束年" class="scinput laydate-icon" id="endyear">-->
+                    <!--<input type="button" class="sure" value="查询"/>-->
+                    <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+                </li>
+            </ul>
+
+            <div id="historycontainer" style=" height: 400px; margin: 0 auto;clear: both;">
+            </div>
+            <div>统计信息：最大值：<label id="indicatorMax" style="padding-right: 8px"></label>最小值：<label id="indicatorMin"style="padding-right: 8px"></label> 平均值：<label id="indicatorAvg"></label></div>
+
+        </div>
+
+    </div>
+    <div class="pagin">
+        <ul class="paginList">
+            <!--<li class="paginItem"><a href="#" target="rightFrame" id="backIndicator">返回</a></li>-->
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        $("#usual1 ul").idTabs();
+    </script>
+
+</div>
+<!--tip-->
+<div id="tip" title="" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p></p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

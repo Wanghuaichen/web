@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8;IE=8"/>
+    <title>无标题文档</title>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script language="JavaScript" src="../js/json2.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <!--从数据库获取数据-->
+    <script src="../js/common.min.js"></script>
+    <script src="../js/device.min.js"></script>
+    <!--<script src="../sourceCode/js/device.js"></script>-->
+    <!--省市区-->
+    <script type="text/javascript" src="../js/geo.min.js"></script>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">设备管理</a></li>
+        <li><a href="#">设备管理</a></li>
+    </ul>
+</div>
+
+<div class="rightinfo">
+
+    <div class="tools">
+
+        <ul class="toolbar">
+            <li class="add"><span><img src="../images/t01.min.png"/></span>添加</li>
+            <li class="update"><span><img src="../images/t02.min.png"/></span>修改</li>
+            <li class="del"><span><img src="../images/t03.min.png"/></span>删除</li>
+            <!--<li><span><img src="../images/t04.png"/></span>统计</li>-->
+        </ul>
+
+        <ul class="toolbar1">
+            <li>
+                <select class="searchType righttoolbar" id="searchType">
+                    <option value="all">全部</option>
+                    <option value="deviceName">设备名称</option>
+                    <option value="deviceId" selected>设备Id</option>
+                    <!--<option value="location">用户地址</option>-->
+                    <!--<option value="userType">用户类型</option>-->
+                </select>
+                <select class="searchType righttoolbar" id="searchByType" style="display: none">
+                    <option checked = "checked" value="root">root</option>
+                    <option value="superr">超级管理员</option>
+                    <option value="admin">管理员</option>
+                    <option value="common">普通用户</option>
+                </select>
+
+                <div class="usercity" id="searchByAddress"style="display: none">
+
+                    <!--<div class="province">-->
+                    <select class="searchType righttoolbar" name="province" id="search1">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="city">-->
+                    <select class="searchType righttoolbar"name="city" id="search2">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="district">-->
+                    <select class="searchType righttoolbar"name="town" id="search3">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                </div>
+                <input type="text" class="scinput" id="searchByName" style="display: none"/>
+                <input type="text" class="scinput" id="searchById"/>
+                <!--<input type="button" class="sure" value="查询"/>-->
+                <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+            </li>
+        </ul>
+    </div>
+
+    <table class="tablelist deviceTable sortable" id="deviceTable">
+        <thead>
+        <!--<tr>-->
+            <th class="nosort" style="display: none"></th>
+            <th class="nosort" style='width: 4%'><input name="checkbox" id="checkAll" type="checkbox"/></th>
+            <th style='width: 6%'><h3>序号</h3><!--<span class="sortpng sortboth"></span><i class="sort"><img src="../images/arrows.png"/></i>--></th>
+            <th><h3>名称</h3></th>
+            <th><h3>ID</h3></th>
+            <th><h3>认证码</h3></th>
+            <th><h3>设备类型</h3></th>
+            <th><h3>运行状态</h3></th>
+            <th><h3>所在工厂</h3></th>
+            <!--th><h3>组织/用户名</h3></th>
+            <th><h3>激活状态</h3></th>
+            <th><h3>功能描述</h3></th>-->
+            <th class="nosort">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="controls">
+        <div id="perpage">
+            <span>每页显示</span>
+            <select onchange="sorter.size(this.value)">
+                <option value="1">1</option>
+                <option value="5">5</option>
+                <option value="10" selected="selected">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>页</span>
+        </div>
+        <div id="navigation">
+            <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+            <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+            <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+            <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+        </div>
+        <div id="text">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+    </div>
+    <script type="text/javascript">
+        var sorter = new TINY.table.sorter("sorter");
+        sorter.head = "head";
+        sorter.asc = "asc";
+        sorter.desc = "desc";
+        sorter.even = "evenrow";
+        sorter.odd = "oddrow";
+        sorter.evensel = "evenselected";
+        sorter.oddsel = "oddselected";
+        sorter.paginate = true;
+        sorter.currentid = "currentpage";
+        sorter.limitid = "pagelimit";
+        //        sorter.init("table",1);
+    </script>
+
+</div>
+<!-- dialog-->
+<div id="add-device" class="dialog" title="添加设备" style="display: none">
+    <p class="validateTips">认真填写下面内容</p>
+
+    <form>
+        <fieldset>
+            <table class="addInfo">
+                <tr>
+                    <td><label>设备名称<b>*</b></label></td>
+                    <td><input name="" type="text" class="dfinput tinput" placeholder="设备名称" id="deviceName"/></td>
+                    <td><label>类型<b>*</b></label>
+                        </td>
+                    <td><select class="select dselect" id="boxType">
+                        <!--<option value="cywee-c801">cywee-c801</option>-->
+                    </select></td>
+                </tr>
+                <tr>
+                    <td><label>Id<b>*</b></label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="Id" id="deviceId" maxlength="19" min="19" onkeyup="test('deviceId')"/></td>
+                    <td><label>认证码<b>*</b></label></td>
+                    <td><input type="text" class="dfinput tinput" placeholder="认证码" id="checkCode" maxlength="4" min="4"/></td>
+                </tr>
+                <tr class="SIMtr">
+                    <td><label>SIM卡号<b>*</b></label></td>
+                    <td><input name="" type="text" class="dfinput tinput" placeholder="卡号" id="cardNum"/></td>
+                    <td><label>卡号期限<b>*</b></label></td>
+                    <td><input name="" type="text" class="dfinput tinput" placeholder="卡号到期时间,格式：YYYY-MM-DD" id="cardExpire"/></td>
+                </tr>
+                <tr>
+                    <!--<td><label>使用人<b>*</b></label></td>-->
+                    <!--<td><div class="select2">-->
+                        <!--<div class="leftselect">-->
+                            <!--<select class="select" id="orglist">-->
+                                <!--<option></option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                        <!--<div class="rightselect">-->
+                            <!--<select class="select" id="userlist">-->
+                                <!--<option></option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div></td>-->
+                    <td><label>功能描述<b>*</b></label></td>
+                    <td><input name="" type="text" class="dfinput tinput" placeholder="功能描述" id="des"/></td>
+                    <td><label>所在工厂<b>*</b></label></td>
+                    <td><select class="select dselect" id="factorylist">
+                        <option></option>
+                    </select>
+                        <div style="color: red">如果没有找到工厂，请联系管理员添加！</div>
+                    </td>
+                </tr>
+                <tr class="k37tr">
+                    <td><label>k37编号</label></td>
+                    <td><input name="" type="text" class="dfinput tinput" placeholder="k37编号" id="k37sn"/></td>
+
+                </tr>
+                <tr>
+                    <td>添加子设备</td>
+                    <td><div class="deviceSubs plc addSub" id="addSubDevice" style="float: none"><img src="../images/t01.min.png" style="vertical-align:middle;"></div></td>
+                </tr>
+                <tr>
+                    <td><label>是否启用<b>*</b></label></td>
+                    <td><cite>
+                        <input name="radio" id="radio1" type="radio" value="active" checked="checked"/>是
+                        <input name="radio" id="radio2" type="radio" value="disabled"/>否
+                    </cite></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <!--<ul id="addDeviceUl">-->
+                <!--<li>-->
+                    <!--<label>设备名称<b>*</b></label>-->
+                    <!--&lt;!&ndash;<input name="" type="text" class="dfinput" placeholder="设备名称" id="deviceName"/>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>Id<b>*</b></label>-->
+                    <!--&lt;!&ndash;<input type="text" class="dfinput" placeholder="Id" id="deviceId" maxlength="19" min="19" onkeyup="test()"/>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>校验码<b>*</b></label>-->
+                    <!--&lt;!&ndash;<input type="text" class="dfinput" placeholder="校验码" id="checkCode" maxlength="4" min="4"/>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>所在工厂<b>*</b></label>-->
+                    <!--&lt;!&ndash;<select class="select" id="factorylist">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<option></option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                    <!--<div style="text-align: center">如果没有找到工厂，请联系管理员添加！</div>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>SIM卡号<b>*</b></label>-->
+                    <!--&lt;!&ndash;<input name="" type="text" class="dfinput" placeholder="卡号" id="cardNum"/>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>卡号期限<b>*</b></label>-->
+                    <!--&lt;!&ndash;<input name="" type="text" class="dfinput" placeholder="卡号到期时间,格式：YYYY-MM-DD" id="cardExpire"/>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>k37编号</label>-->
+                    <!--&lt;!&ndash;<input name="" type="text" class="dfinput" placeholder="k37编号" id="k37sn"/>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>功能描述<b>*</b></label>-->
+                    <!--&lt;!&ndash;<input name="" type="text" class="dfinput" placeholder="功能描述" id="des"/>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>使用人<b>*</b></label>-->
+                    <!--&lt;!&ndash;<div class="select2">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="leftselect">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<select class="select" id="orglist">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<option></option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="rightselect">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<select class="select" id="userlist">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<option></option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>类型<b>*</b></label>-->
+                    <!--&lt;!&ndash;<select class="select" id="boxType">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<option value="cywee-c801">cywee-c801</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label>是否启用<b>*</b></label>-->
+                    <!--&lt;!&ndash;<cite>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input name="radio" id="radio1" type="radio" value="active" checked="checked"/>是&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input name="radio" id="radio2" type="radio" value="disabled"/>否&ndash;&gt;-->
+                    <!--&lt;!&ndash;</cite>&ndash;&gt;-->
+                <!--</li>-->
+                <!--<li class="sub1 subsActive">-->
+                    <!--<label>子设备1Id</label>-->
+                    <!--&lt;!&ndash;<input name="" type="text" class="dfinput" placeholder="子设备1Id" id="plcId1"/>&ndash;&gt;-->
+                    <!--<div class="deviceSubs plc1 add"><img src="../images/t01.png" style="vertical-align:middle;"></div>-->
+                <!--</li>-->
+                <!--<li class="sub1 subsActive">-->
+                    <!--<label>子设备1校验码</label>-->
+                    <!--&lt;!&ndash;<input name="" type="text" class="dfinput" placeholder="子设备1校验码" id="plcCheckCode1"/>&ndash;&gt;-->
+                <!--</li>-->
+            <!--</ul>-->
+            <label class="confirmMsg"> </label>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!--tip-->
+<div id="tip" title="提示信息" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p>当前需要且只能选择一条数据，请重新选择！</p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+<!--del tip-->
+<div id="deltip" title="删除提示信息" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p>确定删除数据信息！</p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+
+    $('.addInfo tbody tr td:odd').addClass('deviceodd');
+    $('.addInfo tbody tr td:even').addClass('deviceeven');
+
+    function test(id){
+        var len=document.getElementById(id).value.length;
+
+        if(len > 14){
+            var reg = /\s{1,}/g;
+            var card_ = "";
+            var card=document.getElementById(id).value;
+            //去除空格
+            card = card.replace(reg,"");
+            for(var i = 0;i < len;i++){
+                if(i == 3||i == 7 ||i == 11)
+                {
+                    card_ = card_ + card.charAt(i) + " ";
+                }
+                else
+                {
+                    card_ = card_ + card.charAt(i);
+                }
+            }
+            document.getElementById(id).value = card_;
+        }
+    }
+
+</script>
+
+</body>
+
+</html>

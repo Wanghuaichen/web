@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/jquery.idTabs.min.js"></script>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/common.min.js"></script>
+    <script src="../js/checkDeviceDetail.min.js"></script>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="device.html">设备管理</a></li>
+        <li><a href="#">查看</a></li>
+    </ul>
+</div>
+<div class="formbody">
+    <div class="showInfo">
+        <label class="infoName">设备名称:</label><label id="deviceName"></label><br>
+        <label class="infoName">使用人:</label><label id="customer"></label><br>
+        <label class="infoName">k37编号:</label><label id="k37sn"></label>
+    </div>
+    <div class="showInfo">
+        <label class="infoName">设备ID:</label><label id="deviceId"></label><br>
+        <label class="infoName">电话:</label><label id="tel"></label>
+
+    </div>
+    <div class="showInfo">
+        <label class="infoName">认证码:</label><label id="deviceCode"></label><br>
+        <label class="infoName">描述:</label><label id="desc"></label>
+    </div>
+    <div class="showInfo">
+        <label class="infoName">工厂:</label><label id="factoryName"></label><br>
+        <label class="infoName">SIM卡号:</label><label id="cardNum"></label>
+    </div>
+    <div class="showInfo">
+        <label class="infoName">地址:</label><label id="factoryAddress"></label><br>
+        <label class="infoName">卡号期限:</label><label id="cardExpire"></label>
+    </div>
+    <!--<ul class="prosearch">-->
+        <!--<li><label>设备名称:</label><label id="deviceName"></label></li>-->
+        <!--<li><label>设备ID:</label><label id="deviceId"></label></li>-->
+        <!--<li><label>校验码:</label><label id="deviceCode"></label></li>-->
+        <!--<li><label>工厂:</label><label id="factoryName"></label></li>-->
+        <!--<li><label>地址:</label><label id="factoryAddress"></label></li>-->
+    <!--</ul>-->
+    <!--<ul class="prosearch">-->
+        <!--<li><label>使用人:</label><label id="customer"></label></li>-->
+        <!--<li><label>电话:</label><label id="tel"></label></li>-->
+        <!--<li><label>描述:</label><label id="desc"></label></li>-->
+        <!--<li><label>SIM卡号:</label><label id="cardNum"></label></li>-->
+        <!--<li><label>卡号期限:</label><label id="cardExpire"></label></li>-->
+    <!--</ul>-->
+    <!--<ul class="prosearch">-->
+        <!--<li><label>k37编号:</label><label id="k37sn"></label></li>-->
+    <!--</ul>-->
+    <ul class="prosearch"></ul>
+    <div id="usual1" class="usual">
+
+        <div class="itab">
+            <ul>
+                <li ><a href="#tab1" class="selected">设备状态</a></li>
+                <li ><a href="#tab2" >子设备</a></li>
+            </ul>
+        </div>
+
+        <div id="tab1" class="tabson">
+            <!-- PLC IOT 中转服务器 工控机-->
+            <div class="monitorshow" style="background-color: #EDF6FA">
+                <!--<table align="center" width="900px" style="background-image: url('../images/monitorbg.png')">-->
+                    <!--<tr>-->
+                        <!--<td id="boxState"><img src="../images/ok.png"></td>-->
+                        <!--<td><img src="../images/rs-fs.png" width="100px" height="70px" alt="中转服务器"></td>-->
+                        <!--<td id ="ipcState"><img src="../images/fail.png"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td><img src="../images/iot.png" width="80px" height="30px" alt="iot" class="iot"></td>-->
+                        <!--<td></td>-->
+                        <!--<td></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td id="plcState"><img src="../images/ok.png"></td>-->
+                        <!--<td></td>-->
+                        <!--<td id="pcShow"><img src="../images/pc.png" width="125px" height="87px" alt="ipc" class="ipc"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td><img src="../images/plc.png" width="80px" height="35" alt="plc" class="plc"></td>-->
+                        <!--<td></td>-->
+                        <!--<td></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+                <!--<div class="rsfsimg"><img src="../images/ok.png" width="3%" height="3%"><img src="../images/rs-fs.png" width="10%" height="10%"><img src="../images/fail.png" width="3%" height="3%"></div>
+                <div class="iotimg"><img src="../images/iot.png" width="10%" height="10%"><img src="../images/pc.png" width="10%" height="10%"></div>
+                <div class="stateimg"><img src="../images/ok.png" width="3%" height="3%"></div>
+                <div class="plcimg"><img src="../images/plc.png" width="10%" height="10%"></div>-->
+            </div>
+        </div>
+        <div id="tab2" class="tabson">
+            <table class="tablelist sortable" id="childDevice">
+                <thead>
+                <tr>
+                    <!--<th class="nosort" style="display: none"></th>-->
+                    <th><h3>序号</h3></th>
+                    <th><h3>子设备Id</h3></th>
+                    <th><h3>认证码</h3></th>
+                    <th><h3>类型</h3></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagin">
+        <ul class="paginList">
+            <li class="paginItem"><a href="device.html" target="rightFrame" id="backDevice">返回</a></li>
+        </ul>
+    </div>
+</div>
+<!--<div class="formtitle">-->
+    <!--<span>设备</span>-->
+<!--</div>-->
+
+<!-- dialog-->
+<div id="iotdialog" class="device" title="头端设备配置信息" style="display: none">
+    <p class="validateTips">软件版本：<label id="boxVersion"></label></p>
+    <table class="tablelist" id="plctable">
+        <thead>
+        <tr>
+            <th style="display: none"></th>
+            <th>序号<i class="sort"><img src="../images/px.gif"/></i></th>
+            <th>ID</th>
+            <th>认证码</th>
+            <th>PLC IP</th>
+            <th>PLC 端口</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div class="formtitle">
+        <span>LAN</span>
+    </div>
+    <table class="tablelist" id="lantable">
+        <thead>
+        <tr>
+            <th style="display: none"></th>
+            <th>序号<i class="sort"><img src="../images/px.gif"/></i></th>
+            <th>IP 地址</th>
+            <th>子网掩码</th>
+            <th>网关</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div class="formtitle">
+        <span>WAN</span>
+    </div>
+    <table class="tablelist" id="wantable">
+        <thead>
+        <tr>
+            <th style="display: none"></th>
+            <th>序号<i class="sort"><img src="../images/px.gif"/></i></th>
+            <th>连接状态</th>
+            <th>IP</th>
+            <th>子网掩码</th>
+            <th>网关</th>
+            <th>DNS</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+
+<!-- dialog-->
+<div id="ipcdialog" class="device" title="工控机配置信息" style="display: none">
+    <p class="validateTips">软件版本：<label id="ipcVersion"></label></p>
+    <table class="tablelist" id = "ipctable">
+        <thead>
+        <tr>
+            <th style="display: none"></th>
+            <th>序号<i class="sort"><img src="../images/px.gif"/></i></th>
+            <th>主机名称</th>
+            <th>ip地址</th>
+            <th>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+    $("#usual1 ul").idTabs();
+</script>
+
+</body>
+
+</html>

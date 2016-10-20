@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎登录后台管理系统</title>
+    <link href="css/style.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/loadBar.min.css" rel="stylesheet" type="text/css"/>
+    <script language="JavaScript" src="js/jquery.js"></script>
+    <script language="JavaScript" src="js/loadBar.min.js"></script>
+    <script src="js/common.min.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--验证码-->
+    <!--省市区-->
+    <script type="text/javascript" src="js/geo.min.js"></script>
+    <script language="javascript">
+        function showloadBar()
+        {
+            var loadbar = new LoadingBar("loadBar01");
+            var max = 1000;
+            loadbar.setMax(max);
+            var i = 0;
+            var time = setInterval(function ()
+            {
+                loadbar.setProgress(i);
+                if (i == max)
+                {
+                    clearInterval(time);
+                    return;
+                }
+                i += 10;
+            }, 40);
+        }
+
+        function filetest() {
+//          document.getElementById("progress").style.display="block";
+            var ret;
+            var factory= new Object();
+           ret = login("RootLiu", "654321");
+            ret = login1("RootLiu", "654321");
+            var  org= new Object();
+            org.type="工厂";
+            ret= listorg(org);
+
+            var response= JSON.parse(ret);
+            if (response.errCode == "success") {
+                var orgList=response.orgList;
+                for(var i in orgList) {
+                    if(orgList[i].name=="城东供热站")
+                        factory.name = orgList[i].name;
+                        factory.uId = orgList[i].id;
+                    }
+                }
+            }
+            showloadBar();
+            uploadfile(factory,document.getElementById("file1"),2);
+        }
+
+        window.onresize=function() {
+            console.log("onresize "+document.documentElement.clientWidth+" "+document.documentElement.clientHeight);
+        };
+
+        window.onblur=function() {
+            console.log("onblur");
+        };
+        window.onfocus=function() {
+            console.log("onfocus");
+        };
+            /*按键事件捕捉*/
+        $(document).ready(function(){
+            $(document).click(function(){
+                console.log("click");
+            });
+           /* $(document).mousemove(function(){
+                console.log("onmousemove");
+            });*/
+            $(document).keydown(function(){
+                console.log("onkeydown");
+            });
+        });
+
+        //是否获得焦点：
+        if($("#loginbtn").is(":focus")){
+            alert("on focus");
+        }
+
+    </script>
+</head>
+
+<div class="registerbody">
+    <div class="registerbox">
+        <ul>
+            <li><input type="file" id="file1" name="file" /></li>
+            <li><input name="" type="button" class="loginbtn" id="loginbtn" value="test" onclick="filetest()"/></li>
+            </ul>
+        </div>
+        <div id="loadBar01" class="loadBar">
+            <div>
+            <span class="percent">
+               <i></i>
+            </span>
+        </div>
+        <span class="percentNum">0%</span>
+    </div>
+</div>
+<div class="loginbm">版权所有 2015 CYWEE</div>
+</body>
+
+</html>

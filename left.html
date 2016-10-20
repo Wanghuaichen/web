@@ -1,0 +1,256 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="css/style.min.css" rel="stylesheet" type="text/css"/>
+    <script language="JavaScript" src="js/jquery.js"></script>
+    <script language="JavaScript" src="js/json2.js"></script>
+    <script language="JavaScript" src="js/common.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            menuList();
+            //导航切换
+            $(".menuson .header").click(function () {
+                var $parent = $(this).parent();
+                $(".menuson>li.active").not($parent).removeClass("active open").find('.sub-menus').hide();
+
+                $parent.addClass("active");
+                if (!!$(this).next('.sub-menus').size()) {
+                    if ($parent.hasClass("open")) {
+                        $parent.removeClass("open").find('.sub-menus').hide();
+                    } else {
+                        $parent.addClass("open").find('.sub-menus').show();
+                    }
+                }
+            });
+            // 三级菜单点击
+            $('.sub-menus li').click(function (e) {
+                $(".sub-menus li.active").removeClass("active")
+                $(this).addClass("active");
+            });
+            $('.title').click(function () {
+                var $ul = $(this).next('ul');
+                $('dd').find('.menuson').slideUp();
+                if ($ul.is(':visible')) {
+                    $(this).next('.menuson').slideUp();
+                } else {
+                    $(this).next('.menuson').slideDown();
+                }
+            });
+            //数据监测和数据分析添加子菜单
+            function menuList(){
+                var responseObj = JSON.parse(polusourcedistkey("family"));
+                if(responseObj.errCode == "success" || responseObj.total !=0) {
+                    var familyList = responseObj.resultList;
+                    for (var j in familyList) {
+                        var family = familyList[j]["family"];
+                        $("#dataMonitorMenu").append("<li><div class='header' id='"+family+"'> " +
+                                "<cite></cite> " +
+                                "<a href='dataMonitor/datamonitor.html' target='rightFrame'>"+family+"监测</a> " +
+                                "<i></i></div></li>");
+                        $("#datanalysisMenu").append("<li><div class='header' id='"+family+"'> " +
+                                "<cite></cite> " +
+                                "<a href='dataAnalysis/dataAnalysis.html' target='rightFrame'>"+family+"减排分析</a> " +
+                                "<i></i></div></li>");
+                        $(document).on("click","#"+family,function(){
+                            var id = $(this).attr("id");
+                            setCookie("monitorMenu",id);
+                        });
+                    }
+                }
+            }
+        });
+        function verticaluser(){
+            var cookieInfo = getCookie("userInfo"); //获取cookie信息
+            var cookieObject = JSON.parse(cookieInfo);
+            var userInfo = cookieObject.account;
+            if(userInfo.type == "common"){
+                document.getElementById("indicatorType").style.display="none";
+                document.getElementById("appManager").style.display="none";
+            }else{
+                document.getElementById("indicatorType").style.display="block";
+                document.getElementById("appManager").style.display="block";
+            }
+            //管理员和普通账户 隐藏掉组织管理功能
+            if(userInfo.type == "root" || userInfo.type == "superr" || userInfo.type == "admin"){
+                document.getElementById("userManagerment").style.display="block";
+            }else{
+                document.getElementById("userManagerment").style.display="none";
+            }
+        }
+    </script>
+</head>
+
+<body style="background:#f0f9fd;" onload="verticaluser();">
+<div class="lefttop"><span></span>系统管理</div>
+
+<dl class="leftmenu">
+
+    <dd>
+        <div class="title">
+            <span><img src="images/leftico02.min.png"/></span>综合监测
+        </div>
+        <ul class="menuson">
+            <li class="active">
+                <div class="header">
+                    <cite></cite>
+                    <a href="comprehensiveMonitor/graphTableShow.html" target="rightFrame">图表展示</a>
+                    <i></i>
+                </div>
+            </li>
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="comprehensiveMonitor/mapShow.html" target="rightFrame">地图展示</a>
+                    <i></i>
+                </div>
+            </li>
+        </ul>
+    </dd>
+    <dd>
+        <div class="title">
+            <span><img src="images/leftico02.min.png"/></span>数据监测
+        </div>
+        <ul class="menuson" id="dataMonitorMenu">
+        </ul>
+    </dd>
+    <dd>
+        <div class="title">
+            <span><img src="images/leftico02.min.png"/></span>数据分析
+        </div>
+        <ul class="menuson" id="datanalysisMenu">
+        </ul>
+    </dd>
+    <dd>
+        <div class="title">
+            <span><img src="images/leftico02.min.png"/></span>设备管理
+        </div>
+        <ul class="menuson">
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="devices/device.html" target="rightFrame">设备管理</a>
+                    <i></i>
+                </div>
+            </li>
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="devices/devTypeManagerment.html" target="rightFrame">设备类型</a>
+                    <i></i>
+                </div>
+            </li>
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="devices/upgradeDevice.html" target="rightFrame">软件升级</a>
+                    <i></i>
+                </div>
+            </li>
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="devices/deviceAlarm.html" target="rightFrame">告警查询</a>
+                    <i></i>
+                </div>
+            </li>
+        </ul>
+    </dd>
+    <dd>
+        <div class="title" id="dataManaMenu">
+            <span><img src="images/leftico02.min.png"/></span>数据管理
+        </div>
+        <ul class="menuson">
+            <li id="indicatorType">
+                <div class="header">
+                    <cite></cite>
+                    <a href="environmental/indicatorManagerment.html" target="rightFrame">数据类型</a>
+                    <i></i>
+                </div>
+            </li>
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="environmental/indicatorList.html" target="rightFrame">实时数据</a>
+                    <i></i>
+                </div>
+            </li>
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="environmental/factoryList.html" target="rightFrame">德图数据</a>
+                    <i></i>
+                </div>
+            </li>
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="environmental/indicatorMap.html" target="rightFrame">地图查看</a>
+                    <i></i>
+                </div>
+            </li>
+            <li id="dataAlarmMenu">
+                <div class="header" id="dataAlarmMenuHeader">
+                    <cite></cite>
+                    <a href="environmental/alarm.html" target="rightFrame" >告警查询</a>
+                    <i></i>
+                </div>
+            </li>
+        </ul>
+    </dd>
+    <dd>
+        <div class="title"><span><img src="images/leftico03.min.png"/></span>用户管理</div>
+        <ul class="menuson">
+            <li id="userManagerment">
+                <div class="header">
+                    <cite></cite>
+                    <a href="user/userManagerment.html" target="rightFrame">账号管理</a>
+                    <i></i>
+                </div>
+            </li>
+        <!--    <li id="organizationmanagerment">
+                <div class="header">
+                    <cite></cite>
+                    <a href="organization/organization.html" target="rightFrame">组织管理</a>
+                    <i></i>
+                </div>
+            </li>-->
+            <!--<li id="resourcemanagerment">-->
+                <!--<div class="header">-->
+                    <!--<cite></cite>-->
+                    <!--<a href="user/orgAllocation.html" target="rightFrame">资源分配</a>-->
+                    <!--&lt;!&ndash;<a href="user/systemAllocation.html" target="rightFrame">资源分配</a>&ndash;&gt;-->
+                    <!--<i></i>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="user/factoryAllocation.html" target="rightFrame">工厂分配</a>
+                    <i></i>
+                </div>
+            </li>-->
+            <!-- <li><cite></cite><a href="#">常用资料</a><i></i></li>
+             <li><cite></cite><a href="#">信息列表</a><i></i></li>
+             <li><cite></cite><a href="#">其他</a><i></i></li>-->
+        </ul>
+    </dd>
+    <dd id="appManager">
+        <div class="title">
+            <span><img src="images/leftico02.min.png"/></span>应用管理
+        </div>
+        <ul class="menuson">
+            <li>
+                <div class="header">
+                    <cite></cite>
+                    <a href="application/application.html" target="rightFrame">应用管理</a>
+                    <i></i>
+                </div>
+            </li>
+        </ul>
+    </dd>
+</dl>
+</body>
+</html>

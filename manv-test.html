@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎登录后台管理系统</title>
+    <link href="css/style.min.css" rel="stylesheet" type="text/css"/>
+
+    <script language="JavaScript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cloud.min.js"></script>
+    <script src="js/common.min.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <!--验证码-->
+    <script type="text/javascript" src="js/vCode.min.js" charset="gbk"></script>
+    <!--省市区-->
+    <script type="text/javascript" src="js/geo.min.js"></script>
+    <script language="javascript">
+
+        $(function () {
+            $('.registerbox').css({'position': 'absolute', 'left': ($(window).width() - 450) / 2});
+            $(window).resize(function () {
+                $('.registerbox').css({'position': 'absolute', 'left': ($(window).width() - 450) / 2});
+            });
+            var container1 = document.getElementById("vCode1");
+            var code1 = new vCode(container1);
+        });
+        
+        function datatest() {
+            var ret;
+
+            ret = login("RootLiu", "654321");
+            ret = login1("RootLiu", "654321");
+            alert("login1 ret " + ret);
+            var user = JSON.parse(getCookie("userInfo"));
+
+            var  org= new Object();
+            org.type="工厂";
+            ret= listorg(org);
+            alert("listorg type ret "+ret);
+            var response= JSON.parse(ret);
+            var factory= new Object();
+            if (response.errCode == "success") {
+                var orgList=response.orgList;
+                for(var i in orgList) {
+                    if(orgList[i].name=="城东供热站") {
+                        factory.name = orgList[i].name;
+                        factory.uId = orgList[i].id;
+                    }
+                }
+            }
+
+            alert("factory "+factory.name);
+            var find_object = new Object();
+            find_object.factory = factory;
+            var page_object=new Object();
+            page_object.max =50;
+            page_object.start =0;
+            var filter_object = new Object();
+            filter_object.include = "time|name|family|higher|lvalue|dvalue|svalue";
+            filter_object.exclude = "";
+
+            var param = new Object();
+            param.find=find_object;
+            param.page=page_object;
+            param.filter=filter_object;
+            ret = manvListNow(param);
+            alert("manvListNow  ret " + ret);
+
+            var time_object =new Object();
+            time_object.scale = "all";
+            time_object.start = new Date().getTime()-5*24*3600*1000;
+            time_object.end = new Date().getTime();
+            find_object.time = time_object;
+
+            var other_param=new Object();
+       //     other_param.filter = filter_object;
+            ret = manvListhist(find_object,page_object,other_param);
+            alert("manvListhist all  ret " + ret);
+
+            time_object.scale = "minute";
+            find_object.time = time_object;
+            find_object.family = "SO2";
+            ret = datahistory(find_object,page_object,other_param);
+            alert("datahistory minute ret " + ret);
+            return;
+
+            time_object.scale = "hour";
+            find_object.time = time_object;
+            find_object.family = "O2";
+            ret = manvListhist(find_object,page_object,other_param);
+            alert("manvListhist hour ret " + ret);
+        }
+        
+    </script>
+</head>
+
+<body style="background-color:#1c77ac; background-image:url(images/light.min.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;"
+      onload="setup();preselect('省份');">
+
+
+<div id="mainBody">
+    <div id="cloud1" class="cloud"></div>
+    <div id="cloud2" class="cloud"></div>
+</div>
+
+
+<div class="logintop">
+    <span>欢迎登录后台管理界面平台</span>
+    <ul>
+        <li><a href="#">回首页</a></li>
+        <li><a href="#">帮助</a></li>
+        <li><a href="#">关于</a></li>
+    </ul>
+</div>
+
+<div class="registerbody">
+    <div class="registerbox">
+        <ul>
+            <li>
+                <label>1<b>*</b></label>
+                <input name="" type="text" class="dfinput userName" id="orgprof" />
+            </li>
+            <li>
+                <label>2<b>*</b></label>
+                <input name="" type="text" class="dfinput pwd" id="orgprovince" />
+            </li>
+            <li>
+                <label>3<b>*</b></label>
+                <input name="" type="text" class="dfinput confirmpwd" id="orgcity" />
+            </li>
+            <li>
+                <label>4<b>*</b></label>
+                <input name="" type="text" class="dfinput pwd" id="orgdistrict" />
+            </li>
+            <li>
+                <label>5<b>*</b></label>
+                <input name="" type="text" class="dfinput tel" id="orgaddress" />
+            </li>
+            <li>
+                <label>6<b>*</b></label>
+                <input name="" type="text" class="dfinput pwd" id="orglocation_code" />
+            </li>            
+            <li>
+                <label>7<b>*</b></label>
+                <input name="" type="text" class="dfinput email" id="orgname" />
+            </li>
+            <li>
+                <label>8<b>*</b></label>
+                <input name="" type="text" class="dfinput email" id="orgstuffs" />
+            </li>
+
+            <li>
+                <label>9<b>*</b></label>
+                <input name="" type="text" class="dfinput email" id="orgcontactname" />
+            </li>
+           
+            <li>
+                <label>10<b>*</b></label>
+                <input name="" type="text" class="dfinput email" id="orgcontactphone" />
+            </li>
+
+            <li>
+                <input name="" type="button" class="loginbtn" value="test" onclick="datatest()"/>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="loginbm">版权所有 2015 CYWEE</div>
+</body>
+
+</html>

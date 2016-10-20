@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎登录环保管理系统</title>
+    <link href="css/style.min.css" rel="stylesheet" type="text/css"/>
+    <script language="JavaScript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/cloud.min.js"></script>
+    <script type="text/javascript" src="js/vCode.min.js" charset="gbk"></script>
+
+    <script language="javascript">
+        $(function () {
+            $('.registerbox').css({'position': 'absolute', 'left': ($(window).width() - 450) / 2});
+            $(window).resize(function () {
+                $('.registerbox').css({'position': 'absolute', 'left': ($(window).width() - 450) / 2});
+            })
+            var container1 = document.getElementById("vCode1");
+            var code1 = new vCode(container1);
+            /*验证码是否输入正确*/
+//            code1.verify(document.getElementById("code1").value());
+        });
+    </script>
+
+</head>
+
+<body style="background-color:#1c77ac; background-image:url(images/light.min.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
+
+
+<div id="mainBody">
+    <div id="cloud1" class="cloud"></div>
+    <div id="cloud2" class="cloud"></div>
+</div>
+
+
+<div class="logintop">
+    <span>欢迎登录环保管理系统</span>
+    <ul>
+        <li><a href="login.html">回首页</a></li>
+        <li><a href="#">帮助</a></li>
+        <li><a href="#">关于</a></li>
+    </ul>
+</div>
+
+<div class="registerbody">
+
+    <!--<span class="systemlogo"></span>-->
+
+    <div class="registerbox findpwdbox">
+        <label class="desInfo">请输入您的帐号或注册的邮箱，密码将以邮件的形式发到您注册的邮箱中</label>
+        <ul>
+            <li>
+                <label>用户名/邮箱<b>*</b></label>
+                <input name="" type="text" class="dfinput userName" placeholder="用户名或邮箱"
+                       onclick="JavaScript:this.value=''"/>
+            </li>
+            <li>
+                <label>验证码<b>*</b></label>
+                <input name="" type="text" placeholder="验证码" class="dfinput valication"
+                       onclick="JavaScript:this.value=''"/>
+                <div id="vCode1" style="width:100px; height: 32px; border: 1px solid #ccc; display: inline-block;"></div>
+            </li>
+            <li>
+                <input name="" type="button" class="loginbtn" value="确定"
+                       onclick="javascript:window.location='main.html'"/>
+                <a href="login.html">登录</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div class="loginbm">版权所有 2015 CYWEE </div>
+
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <style>
+    body{
+    text-align: center;
+    }
+    #navbar {
+    margin:0 auto;
+    width: 1000px;
+    }
+    
+    a {
+    color:#000000;
+    text-decoration:none;
+    }
+    #header {
+    float:left;
+    width:100%%;
+    background:#D3D3D3;
+    font-size:93%%;
+    line-height:normal;
+    }
+    
+    .ooih td {
+    font-size:20px;
+    float:left;
+    background:#DCE1EF;
+    border:solid 1px #8EA2C2;
+    margin-left:2px; 
+    padding:0px;
+    }
+    
+    #header a {
+    display:block;
+    padding:5px 15px 4px;
+    }
+    #header .current {
+    background:#FFFFFF;
+    border-left:solid 1px #8EA2C2;
+    border-top:solid 1px #8EA2C2;
+    border-right:solid 1px #8EA2C2;
+    border-bottom:solid 0px #8EA2C2;
+    }
+    #header .current a{
+    padding-bottom:5px;
+    }
+    .content {
+    margin-top:15px;
+    }
+    .contentHeader {
+    font-size:20px;
+    background-color:#BCC7E0;
+    border:solid 6px #BCC7E0;
+    font-weight:bold;
+    }
+    .contentMain {
+    font-size: 18px;
+    text-align: left;
+    }
+    
+    .contentPara {
+    font-size:16px;
+    }
+    
+    .button {
+    font-size:12px;
+    background-color:#DCE1EF;
+    border:solid 1px #BCC7E0;
+    font-weight:bold;
+    }
+    td {height: 30px; text-align: left; border: solid 1px white}
+    div.left {float: left; width:150px}
+    </style>
+    <script>
+    
+ function overIt(){
+   var the_obj = event.srcElement;
+   the_obj.style.background="red";
+ }
+
+function outIt(){
+   var the_obj = event.srcElement;
+  the_obj.style.background="white";
+}
+
+function load_func()
+{
+    /*    change_option(6,1);*/
+    /*    document.getElementById("current1").focus();*/
+}
+
+
+function change_option(number,index){
+ for (var i = 1; i <= number; i++) {
+      document.getElementById("current" + i).className = "";
+      document.getElementById("content" + i).style.display = "none";
+ }
+  document.getElementById("current" + index).className = "current";
+  document.getElementById("content" + index).style.display = "block";
+}
+
+function upgrade_func()
+{
+  document.getElementById("UpdateAlert").style.display = "block";
+  formupdate.submit();
+  return true;
+}
+
+function save_func()
+{
+      form1.submit();
+}
+function reboot_func()
+{
+      form2.submit();
+}
+function enable4G(enable)
+{
+	if(enable==4)
+	{
+		document.getElementById("pppoespan").style.visibility = "visible";
+		}
+	else
+	{
+		document.getElementById("pppoespan").style.visibility = "hidden";
+	}
+	if(enable==0)
+		document.getElementById("waninfo").style.visibility = "hidden";
+	else
+		document.getElementById("waninfo").style.visibility = "visible";
+	if(enable==2)
+	{
+		document.getElementById("wanip").removeAttribute("readOnly");
+		document.getElementById("wanmask").removeAttribute("readOnly");
+		document.getElementById("wangateway").removeAttribute("readOnly");
+		document.getElementById("wandns1").removeAttribute("readOnly");
+		document.getElementById("wandns2").removeAttribute("readOnly");
+		}
+	else
+	{
+		document.getElementById("wanip").readOnly = "true";
+		document.getElementById("wanmask").readOnly = "true";
+		document.getElementById("wangateway").readOnly = "true";
+		document.getElementById("wandns1").readOnly = "true";
+		document.getElementById("wandns2").readOnly = "true";
+		}
+}
+
+function AuthUrl()
+{       
+        form1.submit();
+
+        return true;
+}
+
+</script>
+    
+    <title>配置</title>
+</head>
+
+<body  onload="load_func();"  scroll="auto" >
+</div>
+
+<form action="reboot.cgi" name=form2 method="POST"  >
+    <br>
+    <table class="button" width=200 align="left">
+        <TD href="#" ><div align="left">版本号:%s</div></TD>
+    </table>
+    <table class="button" width=200 align="left">
+        <TD href="#" ><div align="left">移动用户识别码:%s</div></TD>
+    </table>
+    <table class="button" width=200 align="left">
+        <TD href="#" ><div align="left">信号强度:%s dBm</div></TD>
+    </table>
+    <table class="button" width=100 align="right">
+        <TD href="#" name=save onclick="reboot_func();"><div align="center">重启</div></TD>
+    </table>
+    <table class="button" width=100 align="right">
+        <TD href="#" name=save onclick="save_func();"><div align="center">保存</div></TD>
+    </table>
+</form>
+
+</div>
+</div>
+<form action="save.cgi" name=form1 method="POST"  >
+    <div id="content1" class="content">
+        <br /> <br /> <br />
+        <div class="contentHeader">接入设备配置</div>
+        <div class="contentMain"> 
+            <div class=left>&nbsp设备1</div>ID:<input name=deviceid1 type=text class="contentMain"  size=16 maxlength = 16 readOnly value=%s >&nbsp;校验码:<input name=devicepwd1 type=text class="contentMain"  size=4 maxlength = 4 readOnly value=%s >&nbsp;PLC设备IP:<input name=deviceip1 type=text class="contentMain"  size=16 maxlength = 16 value=%s>&nbsp;端口:<input name=deviceport1 type=text class="contentMain"  size=6 maxlength = 6 value=%s>
+            <br />
+            <div class=left>&nbsp设备2</div>ID:<input name=deviceid2 type=text class="contentMain"  size=16 maxlength = 16 readOnly value=%s >&nbsp;校验码:<input name=devicepwd2 type=text class="contentMain"  size=4 maxlength = 4 readOnly value=%s >&nbsp;PLC设备IP:<input name=deviceip2 type=text class="contentMain"  size=16 maxlength = 16 value=%s>&nbsp;端口:<input name=deviceport2 type=text class="contentMain"  size=6 maxlength = 6 value=%s>  
+            <br />
+            <div class=left>&nbsp设备3</div>ID:<input name=deviceid3 type=text class="contentMain"  size=16 maxlength = 16 readOnly value=%s >&nbsp;校验码:<input name=devicepwd3 type=text class="contentMain"  size=4 maxlength = 4 readOnly value=%s >&nbsp;PLC设备IP:<input name=deviceip3 type=text class="contentMain" size=16 maxlength = 16 value=%s >&nbsp;端口:<input name=deviceport3 type=text class="contentMain"  size=6 maxlength = 6 value=%s> 
+            <br />
+            <div class=left>&nbsp设备4</div>ID:<input name=deviceid4 type=text class="contentMain"  size=16 maxlength = 16 readOnly value=%s >&nbsp;校验码:<input name=devicepwd4 type=text class="contentMain"  size=4 maxlength = 4 readOnly value=%s >&nbsp;PLC设备IP:<input name=deviceip4 type=text class="contentMain"  size=16 maxlength = 16 value=%s>&nbsp;端口:<input name=deviceport4 type=text class="contentMain"  size=6 maxlength = 6 value=%s>
+            <br /><br />
+        </div>
+        
+        <div class="contentHeader">中转服务器配置</div>
+        <div class="contentMain"> 
+            <div class=left>&nbsp服务器 IP:</div><input name=proxyip type=text class="contentMain"	 size=20 maxlength = 20 value=%s>
+            <br /><a><br />
+        </div>
+        
+        <div class="contentHeader">LAN口配置</div>
+        <div class="contentMain"> 
+            <div class=left>&nbsp;IP    地 址:</div><input name=lanip type=text class="contentMain"	size=20 maxlength = 20 value=%s>
+            <br />
+            <div class=left>&nbsp;子网掩码:</div><input name=lanmask type=text class="contentMain"	size=20 maxlength = 20 value=%s>  
+            <br /> 
+            <div class=left>&nbsp;默认网关:</div><input name=langateway type=text class="contentMain"  size=20 maxlength = 20 value=%s>  
+            <br /><br />
+        </div>
+        
+        <div class="contentHeader">WAN口配置</div>
+        <div class="contentMain"> 
+            <input onfocus="overIt()" onblur="outIt()" type=radio name=nettype value=disable %s onclick="enable4G(0);">不启用
+            <input onfocus="overIt()" onblur="outIt()" type=radio name=nettype value=lte %s onclick="enable4G(1);">移动网络
+            <input onfocus="overIt()" onblur="outIt()" type=radio name=nettype value=static %s onclick="enable4G(2);">静态IP
+            <input onfocus="overIt()" onblur="outIt()" type=radio name=nettype value=dhcp %s onclick="enable4G(3);">DHCP
+            <input onfocus="overIt()" onblur="outIt()" type=radio name=nettype value=pppoe %s onclick="enable4G(4);">PPPOE <br /> <br />
+            <span id=waninfo style="margin-left:0px; visibility:%s ">
+            <div class=left>&nbsp;IP    地 址:</div><input name=wanip id=wanip type=text class="contentMain" size=20 maxlength = 20 %s value=%s > 
+            <br />
+            <div class=left>&nbsp;子网掩码:</div><input name=wanmask id=wanmask type=text class="contentMain"	size=20 maxlength = 20 %s value=%s >
+            <br />
+            <div class=left>&nbsp;默认网关:</div><input name=wangateway id=wangateway type=text class="contentMain"	size=20 maxlength = 20 %s value=%s >
+            <br />
+            <div class=left>&nbsp;首选 DNS:</div><input name=wandns1 id=wandns1 type=text class="contentMain"	size=20 maxlength = 20  %s value=%s >
+            <br />
+            <div class=left>&nbsp;备用 DNS:</div><input name=wandns2 id=wandns2 type=text class="contentMain"	size=20 maxlength = 20  %s value=%s >
+            <br /><br />
+            </span>
+            <span id=pppoespan style="margin-left:0px; visibility:%s ">
+            <div class=left>&nbsp;用户名:</div><input name=pppoeuser type=text class="contentMain" size=20 maxlength=20 value=%s><br />
+            <div class=left>&nbsp;密  码:</div><input name=pppoepwd type=password class="contentMain" size=20 maxlength=20 value=%s><br />
+            </span>
+            <br /><br />
+        </div>
+</body>
+</html>

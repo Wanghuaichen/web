@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <!--从数据库获取数据-->
+    <script src="../js/common.min.js"></script>
+    <script src="../js/checkUserDetail.min.js"></script>
+    <!--省市区-->
+    <script type="text/javascript" src="../js/geo.min.js"></script>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="userManagerment.html">用户管理</a></li>
+        <li><a href="#">查看用户详细</a></li>
+    </ul>
+</div>
+<div>
+    <ul class="prosearch">
+        <li><label>用户名:</label><label id="fatherName"></label></li>
+        <li><label>类型:</label><label id="fatherType"></label></li>
+        <li><label>权限:</label><label id="fatherAppName"></label></li>
+        <li><label>所属单位:</label><label id="fatherOrgName"></label></li>
+    </ul>
+    <ul class="prosearch">
+        <li><label>姓名:</label><label id="fatherRealName"></label></li>
+        <li><label>电话:</label><label id="fatherTel"></label></li>
+        <li><label>状态:</label><label id="fatherState"></label></li>
+    </ul>
+</div>
+<div class="formtitle">
+    <span>子账户</span>
+</div>
+<div class="rightinfo">
+
+    <div class="tools">
+
+        <ul class="toolbar">
+            <!--<li class="add"><span><img src="../images/t01.png"/></span>添加</li>-->
+            <li class="update"><span><img src="../images/t02.min.png"/></span>修改</li>
+            <li class="del"><span><img src="../images/t03.min.png"/></span>删除</li>
+            <!--<li><span><img src="../images/t04.png"/></span>统计</li>-->
+        </ul>
+
+
+        <ul class="toolbar1">
+            <li>
+                <select class="searchType righttoolbar" id="searchType">
+                    <option value="all">全部</option>
+                    <option value="userName">用户名称</option>
+                    <!--<option value="location">用户地址</option>-->
+                    <option value="userType">用户类型</option>
+                </select>
+                <select class="searchType righttoolbar" id="searchByType" style="display: none">
+                    <option checked = "checked" value="root">root</option>
+                    <option value="superr">超级管理员</option>
+                    <option value="admin">管理员</option>
+                    <option value="common">普通用户</option>
+                </select>
+
+                <div class="usercity" id="searchByAddress"style="display: none">
+
+                    <!--<div class="province">-->
+                    <select class="searchType righttoolbar" name="province" id="search1">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="city">-->
+                    <select class="searchType righttoolbar" name="city" id="search2">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                    <!--<div class="district">-->
+                    <select class="searchType righttoolbar" name="town" id="search3">
+                        <option></option>
+                    </select>
+                    <!--</div>-->
+                </div>
+                <input type="text" class="scinput" id="searchByName"/>
+                <!--<input type="button" class="sure" value="查询"/>-->
+                <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+            </li>
+        </ul>
+
+    </div>
+
+
+    <table class="tablelist deviceTable sortable" id="childUser">
+        <thead>
+        <tr>
+            <th class="nosort" style="display: none"></th>
+            <th class="nosort"><input name="checkbox" id="checkAll" type="checkbox"/></th>
+            <th><h3>序号</h3></th>
+            <th><h3>用户名</h3></th>
+            <th><h3>类型</h3></th>
+            <th><h3>权限</h3></th>
+            <th><h3>所属单位</h3></th>
+            <th><h3>姓名</h3></th>
+            <th><h3>电话</h3></th>
+            <th><h3>状态</h3></th>
+            <!--<th class="nosort">操作</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="controls">
+        <div id="perpage">
+            <span>每页显示</span>
+            <select onchange="sorter.size(this.value)">
+                <option value="1">1</option>
+                <option value="5">5</option>
+                <option value="10" selected="selected">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>页</span>
+        </div>
+        <div id="navigation">
+            <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+            <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+            <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+            <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+        </div>
+        <div id="text">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+    </div>
+    <script type="text/javascript">
+        var sorter = new TINY.table.sorter("sorter");
+        sorter.head = "head";
+        sorter.asc = "asc";
+        sorter.desc = "desc";
+        sorter.even = "evenrow";
+        sorter.odd = "oddrow";
+        sorter.evensel = "evenselected";
+        sorter.oddsel = "oddselected";
+        sorter.paginate = true;
+        sorter.currentid = "currentpage";
+        sorter.limitid = "pagelimit";
+        //        sorter.init("table",1);
+    </script>
+
+
+    <div class="pagin">
+        <!--<div class="message">共<i class="blue">1256</i>条记录，当前显示第&nbsp;<i class="blue">2&nbsp;</i>页</div>-->
+        <ul class="paginList">
+            <!--<li class="paginItem"><a href="javascript:;"><span class="pagepre"></span></a></li>-->
+            <!--<li class="paginItem"><a href="javascript:;">1</a></li>-->
+            <!--<li class="paginItem current"><a href="javascript:;">2</a></li>-->
+            <!--<li class="paginItem"><a href="javascript:;">3</a></li>-->
+            <!--<li class="paginItem"><a href="javascript:;">4</a></li>-->
+            <!--<li class="paginItem"><a href="javascript:;">5</a></li>-->
+            <!--<li class="paginItem more"><a href="javascript:;">...</a></li>-->
+            <li class="paginItem"><a href="userManagerment.html" target="rightFrame" id="backUser">返回</a></li>
+            <!--<li class="paginItem"><a href="javascript:;"><span class="pagenxt"></span></a></li>-->
+        </ul>
+    </div>
+
+</div>
+<!-- dialog-->
+<div id="add-user" class="dialog" title="修改子用户" style="display: none">
+    <p class="validateTips">认真填写下面内容</p>
+
+    <form>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>用户名<b>*</b></label>
+                    <input name="" type="text" class="dfinput" id="userName" placeholder="用户名"/>
+                </li>
+                <li>
+                    <label>真实姓名<b>*</b></label>
+                    <input name="" type="text" class="dfinput" id="realname" placeholder="真实姓名"/>
+                </li>
+                <li class="orgselect">
+                    <label>所属组织<b>*</b></label>
+                    <select class="select select1" id="childorgList">
+                    </select>
+                    <!--<div class="userSelect">-->
+                        <!--&lt;!&ndash;<input type="button" class="sure addOrg" value="添加"/>&ndash;&gt;-->
+                    <!--</div>-->
+                </li>
+                <li>
+                    <label>联系电话<b>*</b></label>
+                    <input name="" type="text" class="dfinput" id="mobile" placeholder="联系电话"/>
+                </li>
+                <li>
+                    <label>邮箱<b>*</b></label>
+                    <input name="" type="email" class="dfinput" id="email" placeholder="邮箱"/>
+                </li>
+                <li>
+                    <label>所在地<b>*</b></label>
+
+                    <div class="usercity">
+
+                        <!--<div class="province">-->
+                        <select class="select select2" name="province" id="users1">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                        <!--<div class="city">-->
+                        <select class="select select2"name="city" id="users2">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                        <!--<div class="district">-->
+                        <select class="select select2"name="town" id="users3">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                    </div>
+
+                </li>
+                <li>
+                    <label>详细地址<b>*</b></label>
+                    <input type="text" id="userdetailaddress" class="dfinput email" placeholder="详细地址" maxlength="128"/>
+                </li>
+                <!--<li>
+                    <label>子系统权限<b>*</b></label>
+                    <cite class="systems">
+                        <input name="systemscheckbox" id="checkbox1" type="checkbox" value="1"/>权限1
+                        <input name="systemscheckbox" id="checkbox2" type="checkbox" value="2"/>权限2
+                        <input name="systemscheckbox" id="checkbox3" type="checkbox" value="3"/>权限3
+                    </cite>
+                </li>-->
+                <li>
+                    <label>是否启用<b>*</b></label>
+                    <cite>
+                        <input name="isEnableRadio" type="radio" value="active"/>是
+                        <input name="isEnableRadio" type="radio" value="disabled" checked="checked"/>否
+                    </cite>
+                </li>
+
+            </ul>
+            <label class="confirmMsg"> </label>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- dialog-->
+<div id="add-org" class="dialog" title="添加组织" style="display: none">
+    <p class="validateTips">认真填写下面内容</p>
+
+    <form>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>单位名称<b>*</b></label>
+                    <input type="text" id="unitname" class="dfinput" placeholder="单位名称"
+                           maxlength="64"/>
+                </li>
+                <li>
+                    <label>单位类型<b>*</b></label>
+                    <select id="unittype" class="select select1">
+                        <option checked = "checked">运营商</option>
+                        <option>环保局</option>
+                        <option>设备商</option>
+                        <option>工厂</option>
+                    </select>
+                </li>
+                <li>
+                    <label>所在地<b>*</b></label>
+
+                    <div class="usercity">
+
+                        <!--<div class="province">-->
+                        <select class="select select2" name="province" id="s1">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                        <!--<div class="city">-->
+                        <select class="select select2"name="city" id="s2">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                        <!--<div class="district">-->
+                        <select class="select select2"name="town" id="s3">
+                            <option></option>
+                        </select>
+                        <!--</div>-->
+                    </div>
+
+                </li>
+                <li>
+                    <label>详细地址<b>*</b></label>
+                    <input type="text" id="detailaddress" class="dfinput email" placeholder="详细地址" maxlength="128"/>
+                </li>
+                <li>
+                    <label>单位联系人<b>*</b></label>
+                    <input name="" type="text" id="linkman" class="dfinput" placeholder="单位联系人"
+                           maxlength="64"/>
+                </li>
+                <li>
+                    <label>行业类型<b>*</b></label>
+                    <select id="professional" class="select select1">
+                        <option checked = "checked">IT</option>
+                        <option>互联网</option>
+                        <option>环保</option>
+                        <option>纺织</option>
+                    </select>
+                </li>
+                <li>
+                    <label>人数<b>*</b></label>
+                    <input name="" type="text" id="stuffs" class="dfinput" placeholder="人数"
+                           maxlength="64"/>
+                </li>
+                <li>
+                    <label>电话<b>*</b></label>
+                    <input name="" type="tel" id="phone" class="dfinput" placeholder="电话"
+                           maxlength="11"/>
+                </li>
+            </ul>
+            <label class="confirmMsg"> </label>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!--tip-->
+<div id="tip" title="提示信息" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p>当前只能选择一条数据进行修改，请重新选择！</p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+<!--del tip-->
+<div id="deltip" title="删除提示信息" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p>确定删除数据信息！</p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+
+</body>
+
+</html>

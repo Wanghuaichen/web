@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <!--从数据库获取数据-->
+    <script src="../js/common.min.js"></script>
+
+    <script type="text/javascript" src="../js/application.min.js"></script>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">应用管理</a></li>
+        <li><a href="#">应用管理</a></li>
+    </ul>
+</div>
+
+<div class="rightinfo">
+
+    <div class="tools">
+
+        <ul class="toolbar">
+            <li class="add"><span><img src="../images/t01.min.png"/></span>添加</li>
+            <li class="update"><span><img src="../images/t02.min.png"/></span>修改</li>
+            <li class="del"><span><img src="../images/t03.min.png"/></span>删除</li>
+            <!--<li><span><img src="../images/t04.png"/></span>统计</li>-->
+        </ul>
+
+
+        <ul class="toolbar1">
+            <li>
+                <select class="searchType righttoolbar" id="searchType">
+                    <option>全部</option>
+                    <option>名称</option>
+                    <option>类型</option>
+                </select>
+                <select class="searchType righttoolbar" id="searchByType" style="display: none">
+                    <option checked = "checked" value="operation">运营</option>
+                    <option value="customer">应用</option>
+                </select>
+
+                <input type="text" class="scinput" id="searchByName"/>
+                <!--<input type="button" class="sure" value="查询"/>-->
+                <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+            </li>
+        </ul>
+
+    </div>
+
+    <table class="tablelist deviceTable sortable" id="appTable">
+        <thead>
+        <tr>
+            <th class="nosort" style="display: none"></th>
+            <th class="nosort" style='width: 4%'><input type="checkbox" name="checkbox" id="checkAll"/></th>
+            <th style='width: 6%'><h3>序号</h3></th>
+            <th><h3>名称</h3></th>
+            <th><h3>创建人</h3></th>
+            <th><h3>类型</h3></th>
+            <th><h3>功能</h3></th>
+            <th class="nosort">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="controls">
+        <div id="perpage">
+            <span>每页显示</span>
+            <select onchange="sorter.size(this.value)">
+                <option value="5">5</option>
+                <option value="10"selected="selected">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>页</span>
+        </div>
+        <div id="navigation">
+            <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+            <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+            <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+            <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+        </div>
+        <div id="text">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+    </div>
+    <script type="text/javascript">
+        var sorter = new TINY.table.sorter("sorter");
+        sorter.head = "head";
+        sorter.asc = "asc";
+        sorter.desc = "desc";
+        sorter.even = "evenrow";
+        sorter.odd = "oddrow";
+        sorter.evensel = "evenselected";
+        sorter.oddsel = "oddselected";
+        sorter.paginate = true;
+        sorter.currentid = "currentpage";
+        sorter.limitid = "pagelimit";
+        //        sorter.init("table",1);
+    </script>
+
+</div>
+<!-- dialog-->
+<div id="add-app" class="dialog" title="添加应用" style="display: none">
+    <p class="validateTips">认真填写下面内容</p>
+
+    <form>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>名称<b>*</b></label>
+                    <input name="" type="text" class="dfinput" id="appName" placeholder="名称"/>
+                    <!--<span class="appName confirmMsg"></span>-->
+                </li>
+                <!--<li>-->
+                    <!--<label>创建人<b>*</b></label>-->
+                    <!--<div class="select2">-->
+                        <!--<div class="leftselect">-->
+                            <!--<select class="select" id="orglist">-->
+                            <!--</select>-->
+                        <!--</div>-->
+                        <!--<div class="rightselect">-->
+                            <!--<select class="select" id="userlist">-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</li>-->
+                <li>
+                    <label>类型<b>*</b></label>
+                    <select class="select" id="appType">
+                        <option checked = "checked" value="operation">运营管理</option>
+                        <option value="customer">App应用</option>
+                    </select>
+                </li>
+            </ul>
+            <label class="confirmMsg"> </label>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+    </form>
+</div>
+<!-- 权限dialog-->
+<div id="operateDialog" class="device" title="功能列表" style="display: none">
+    <p class="validateTips">软件版本：</p>
+    <table class="tablelist">
+        <thead>
+        <tr>
+            <th style="display: none"></th>
+            <th>序号<i class="sort"><img src="../images/px.gif"/></i></th>
+            <th>名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+<!--tip-->
+<div id="tip" title="提示信息" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p>当前只能选择一条数据进行修改，请重新选择！</p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+<!--del tip-->
+<div id="deltip" title="删除提示信息" style="display: none">
+
+    <div class="tipinfo">
+        <span><img src="../images/ticon.min.png" /></span>
+        <div class="tipright">
+            <p>确定删除数据信息！</p>
+            <!--<cite>如果是请点击确定按钮 ，否则请点取消。</cite>-->
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+
+</body>
+
+</html>

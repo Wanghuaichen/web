@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="../css/style.min.css" rel="stylesheet" type="text/css"/>
+    <!--表的分页排序-->
+    <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <!--从数据库获取数据-->
+    <script src="../js/common.min.js"></script>
+    <script type="text/javascript" src="../js/geo.min.js"></script>
+    <script src="../js/upgradeDeviceDetail.min.js"></script>
+
+</head>
+
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="upgradeDevice.html">软件升级</a></li>
+        <li><a href="#">查看升级详细</a></li>
+    </ul>
+</div>
+<div class="formbody">
+    <ul class="prosearch">
+        <li><label>软件名称:</label><label id="name"></label></li>
+        <li><label>版本号:</label><label id="version"></label></li>
+        <li><label>适用设备类型:</label><label id="dtype"></label></li>
+    </ul>
+
+</div>
+
+<div class="formtitle">
+    <span>设备列表</span>
+</div>
+
+<div class="rightinfo">
+
+    <div class="tools">
+        <ul class="toolbar">
+            <li class="update"><span><img src="../images/t02.min.png"/></span>保存</li>
+        </ul>
+
+        <ul class="toolbar1">
+            <li>
+                <select class="searchType righttoolbar" id="searchType">
+                    <option value="all">全部</option>
+                    <option value="deviceName">设备名称</option>
+                    <option value="deviceId" selected>设备Id</option>
+                </select>
+
+                <input type="text" class="scinput" id="searchByName" style="display: none"/>
+                <input type="text" class="scinput" id="searchById"/>
+                <img class="searchpng" id="searchpng" src="../images/ico06.min.png"/>
+            </li>
+        </ul>
+    </div>
+
+    <table class="tablelist deviceTable sortable" id="deviceTable">
+        <thead>
+        <tr>
+            <th class="nosort" style="display: none"></th>
+            <th class="nosort" style='width: 4%'><input name="checkbox" id="checkAll" type="checkbox"/></th>
+            <th style='width: 6%'><h3>序号</h3></th>
+            <th><h3>名称</h3></th>
+            <th><h3>设备ID</h3></th>
+            <th><h3>使用人</h3></th>
+            <th><h3>当前版本</h3></th>
+            <th><h3>运行状态</h3></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="controls">
+        <div id="perpage">
+            <span>每页显示</span>
+            <select onchange="sorter.size(this.value)">
+                <option value="1">1</option>
+                <option value="5">5</option>
+                <option value="10" selected="selected">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span>页</span>
+        </div>
+        <div id="navigation">
+            <img src="../images/first.gif" width="16" height="16" alt="首页" onclick="sorter.move(-1,true)" />
+            <img src="../images/previous.gif" width="16" height="16" alt="上一页" onclick="sorter.move(-1)" />
+            <img src="../images/next.gif" width="16" height="16" alt="下一页" onclick="sorter.move(1)" />
+            <img src="../images/last.gif" width="16" height="16" alt="末页" onclick="sorter.move(1,true)" />
+        </div>
+        <div id="text">第<span id="currentpage"></span> 页/共<span id="pagelimit"></span>页</div>
+    </div>
+    <script type="text/javascript">
+        var sorter = new TINY.table.sorter("sorter");
+        sorter.head = "head";
+        sorter.asc = "asc";
+        sorter.desc = "desc";
+        sorter.even = "evenrow";
+        sorter.odd = "oddrow";
+        sorter.evensel = "evenselected";
+        sorter.oddsel = "oddselected";
+        sorter.paginate = true;
+        sorter.currentid = "currentpage";
+        sorter.limitid = "pagelimit";
+        //        sorter.init("table",1);
+    </script>
+
+    <div class="pagin">
+        <ul class="paginList">
+            <li class="paginItem"><a href="upgradeDevice.html" target="rightFrame" id="backUser">返回</a></li>
+        </ul>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+
+</body>
+
+</html>
